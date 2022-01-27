@@ -1,0 +1,61 @@
+#!markdown
+
+<span style="font-size:16px;">
+<h1 style="font-family:Copperplate">Arrays</h1>
+<code>Arrays</code> are a data structure in C# that can store multiple of the same type of variable. For example, you could have an <code>array</code> of <code>ints</code>: <kbd>[1, 2, 3]</kbd>, an <code>array</code> of <code>doubles</code>: <kbd>[1.2, 0.144579, 63.0]</kbd>, or an <code>array</code> of <code>strings</code>: <kbd>["Hello", "World!"]</kbd>.
+</span>
+
+#!markdown
+
+<span style="font-size:16px;">
+<h4 style="font-family:Copperplate;margin-bottom:6pt;">Declaring an Array</h4>
+Declaring an array is very similar to declaring a variable. First, declare the type of variable stored in the array, and then denote that it is an array with <code>[]</code> like so:<br />
+<kbd>int[] arrayOfIntegers;</kbd>
+</span>
+
+#!markdown
+
+<span style="font-size:16px;">
+<h4 style="font-family:Copperplate;margin-bottom:6pt;">Initializing an Array</h4>
+There are two ways of initializing the variables in an array. The first is to assign the value of each variable:<br />
+<kbd>int[] arrayOfIntegers = {1, 2, 3, 4};</kbd><br />
+The second is to use the <code>new</code> keyword. This allows you to specify the size of the array without assigning values to each item; unspecified items will be initialized to a default value. For example, unspecified <code>integers</code> will be initialized to 0.<br />
+<kbd>int[] arrayOfIntegers = new int[4];</kbd><br /><br />
+Below are some examples.
+</span>
+
+#!csharp
+
+// Create an array of two strings
+string[] arrayOfStrings = {"Hello", "World!"};
+
+// Create an array of four integers, and add values later
+int[] arrayOfIntegers = new int[4];
+
+// You can also use the new keyword like this: 
+double[] arrayOfDoubles = new double[3] {1.2, 0.144579, 63.0};
+
+// And like this: 
+char[] arrayOfCharacters = new char[] {'a', 'Z', '.'};
+
+//This prints each array:
+Console.WriteLine($"The array of strings: \t\t[{string.Join(", ", arrayOfStrings)}]\nThe array of integers: \t\t[{string.Join(", ", arrayOfIntegers)}]\nThe array of doubles: \t\t[{string.Join(", ", arrayOfDoubles)}]\nThe array of characters: \t[{string.Join(", ", arrayOfCharacters)}]\n");
+
+#!markdown
+
+<span style="font-size:16px;">
+<h4 style="font-family:Copperplate;margin-bottom:6pt;">Accessing Array Values</h4>
+<code>Array</code> elements are accessed using <i>indexing</i>. Each value in the array is assigned an index; the first element is assigned 0, and the proceeding elements are assigned indexes in <i>ascending order</i>.<br />
+In C#, array elements are accessed using <code>[i]</code> where i is the index of the element to access. Given the array <kbd><code>AgeOfCows</code> = [15, 4, 8, 9, 3]</kbd>, the following code will access 8 and print it to the console:<br />
+<kbd>Console.Write(AgeOfCows[2]);</kbd><br /><br />
+You can use this method to alter elements in an array as well. The following code will change the value 9 to 10.<br />
+<kbd>AgeOfCows[3] = 10;</kbd>
+</span>
+
+#!markdown
+
+<span style="font-size:16px;">
+<h4 style="font-family:Copperplate;margin-bottom:6pt;">Arrays in Memory</h4>
+</span>
+
+![./Assets/ArraysInMemory.png](attachment:./Assets/ArraysInMemory.png)
