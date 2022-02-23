@@ -67,8 +67,19 @@ Console.WriteLine(SalesPerRegister[2]);
 
 #!markdown
 
+<span style="font-size:16px;">
+<h4 style="font-family:Copperplate">Arrays in Memory</h4>
+<code>Arrays</code> are stored in memory in a contiguous block. The array variable is a reference type, meaning the variable stored is a memory address. This address points to the first value in the array. Array <code>indexes</code> indicate how many objects to look ahead of that address; that is why <kbd>array[0]</kbd> accesses the first element - we are adding 0 to the address. <br />
+
+
+<img src="https://raw.githubusercontent.com/FLAMINGxFURY/TextbookTemp/main/Chapter%201%20-%20Array%20and%20Array%20Algorithms/Assets/ArraysInMemory.jpg" style="width:90%;"/><br />
+<a href="https://beginnersbook.com/2018/10/data-structure-array/" style="font-size:11px;">Source: BeginnersBook.com</a>
+</span>
+
+#!markdown
+
 <span style="font-size:14px;">
-<b style="font-size:16px;">Exercises</b> &emsp;|&emsp; <i>Place your answers a <b>new</b> markdown block below.</i>
+<b style="font-size:16px;">Exercises</b> &emsp;|&emsp; <i>Place your answers in a <b>new</b> markdown cell below.</i>
 <ol>
 <li> What does the following code do?  <br />
 <code>int[] monthlySales = new int[];</code> 

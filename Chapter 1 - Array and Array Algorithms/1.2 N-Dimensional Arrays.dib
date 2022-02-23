@@ -1,0 +1,12 @@
+#!markdown
+
+<span style="font-size:16px;">
+<h1 style="font-family:Copperplate"><i>n</i>-Dimensional Arrays</h1>
+<code>Arrays</code> are not restricted to one dimension. They are commonly used to represent grids in two dimensions, and can have any number of dimensions.
+</span>
+
+#!markdown
+
+<span style="font-size:16px;">
+multi:<br /><img src="https://raw.githubusercontent.com/FLAMINGxFURY/TextbookTemp/main/Chapter%201%20-%20Array%20and%20Array%20Algorithms/Assets/2DArr.png" style="width:90%;" /> <br /><a href="https://www.geeksforgeeks.org/multidimensional-arrays-c-cpp/" style="font-size:11px;">Source: GeeksForGeeks</a><br />jagged:<br /><img src="https://raw.githubusercontent.com/FLAMINGxFURY/TextbookTemp/main/Chapter%201%20-%20Array%20and%20Array%20Algorithms/Assets/JagArr.jpg" style="width:90%;" /><br /><a href="https://www.geeksforgeeks.org/jagged-array-or-array-of-arrays-in-c-with-examples/" style="font-size:11px;">Source: GeeksForGeeks</a>
+</span>
