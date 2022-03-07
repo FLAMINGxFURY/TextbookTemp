@@ -1,3 +1,6 @@
 #!markdown
 
-This section should be heavily focused on one or a couple of exercises
+1. Use builtins to sort and search each row of a 2-D Jagged Array
+2. Implement Merge Sort
+3. Implement Binary Search
+4. Use Merge Sort and Binary Search for the same 2-D Jagged Array

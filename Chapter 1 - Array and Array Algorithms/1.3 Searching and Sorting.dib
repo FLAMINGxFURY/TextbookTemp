@@ -1,0 +1,84 @@
+#!markdown
+
+<span style="font-size:16px;">
+<h1 style="font-family:Copperplate">Searching and Sorting</h1>
+A key operation when working with arrays is finding something in it. Chapter 1.1 showcases the <code>Array.IndexOf()</code> method, which will tell you <i>if</i> a value is in the array, and <i>where</i> in the array it is. So, how does this work? First, run the code block below so that we have an array to start with.
+</span>
+
+#!csharp
+
+// The following block of code will read in the array from a file
+
+using System.IO;
+
+int[] inputArray = new int[30];
+
+using(var reader = new StreamReader(@"./Assets/inputArray.txt")) {
+    for (int i = 0; i < 30; i++) {
+        var line = reader.ReadLine();
+        inputArray[i] = int.Parse(line);
+    }
+}
+
+#!markdown
+
+<span style="font-size:16px;">
+The simplest way to search an array is to check each value, and go to the next if we don't find a match. Below is code to mimic <code>Array.IndexOf()</code>. Try it for yourself!
+</span>
+
+#!csharp
+
+// Run this code block before trying to use FindIndex()
+
+int FindIndex(int[] arr, int find) {
+    int index = -1;     //The method will return -1 if it doesn't find an index.
+    
+    for(int i = 0; i < arr.Length; i++) {
+        if(arr[i] == find) {    //we found a match!
+            index = i;
+            break;              //stop searching
+        }
+    }
+
+    return index;
+}
+
+#!csharp
+
+Console.WriteLine($"The value was found at:\t {FindIndex(inputArray, 409)}");
+Console.WriteLine($"Using IndexOf():\t\t {Array.IndexOf(inputArray, 409)}");
+
+#!markdown
+
+<span style="font-size:16px;">
+<h4 style="font-family:Copperplate;margin-bottom:6pt;">Time Complexity</h4>
+x
+</span>
+
+#!markdown
+
+<span style="font-size:16px;">
+<h4 style="font-family:Copperplate;margin-bottom:6pt;">Sorting</h4>
+x
+</span>
+
+#!markdown
+
+<span style="font-size:16px;">
+<h4 style="font-family:Copperplate;margin-bottom:6pt;">Making Searches and Sorts Faster</h4>
+x
+</span>
+
+#!markdown
+
+<hr /><span style="font-size:14px;">
+<b style="font-size:16px;">Exercises</b> &emsp;|&emsp; <i>Place your answers in a <b>new</b> markdown cell below.</i>
+<ol>
+<li> What does the following code do?
+
+```csharp
+string truth = "cry";
+```
+
+</li> 
+</span>

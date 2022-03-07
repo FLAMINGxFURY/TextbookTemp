@@ -9,18 +9,36 @@
 
 <span style="font-size:16px;">
 <h4 style="font-family:Copperplate;margin-bottom:6pt;">Declaring an Array</h4>
-Declaring an array is similar to declaring a variable. First, declare the type of values that the array stores. Then, denote that it is an array with <code>[]</code>, like so:<br />
-<kbd>int[] arrayOfIntegers;</kbd>
+Declaring an array is similar to declaring a variable. First, declare the type of values that the array stores. Then, denote that it is an array with <code>[]</code>, like so:
 </span>
+<br /><br />
+
+>```csharp
+>int[] ArrayOfIntegers;
+>```
 
 #!markdown
 
 <span style="font-size:16px;">
 <h4 style="font-family:Copperplate;margin-bottom:6pt;">Initializing an Array</h4>
-An array’s contents can be initialized by assigning a value to each of its items:<br />
-<kbd>int[] arrayOfIntegers = {1, 2, 3, 4};</kbd><br /><br />
-Alternatively, the <code>new</code> keyword allows you to specify an array’s size and initialize its elements to a type-dependent default value. For example, unspecified <code>integers</code> are initialized to 0.<br />
-<kbd>int[] arrayOfIntegers = new int[4];</kbd><br /><br />
+An array’s contents can be initialized by assigning a value to each of its items:
+</span>
+<br /><br />
+
+>```csharp
+>int[] arrayOfIntegers = {1, 2, 3, 4};
+>```
+
+<span style="font-size:16px;">
+Alternatively, the <code>new</code> keyword allows you to specify an array’s size and initialize its elements to a type-dependent default value. For example, unspecified <code>integers</code> are initialized to 0.
+</span>
+<br /><br />
+
+>```csharp
+>int[] arrayOfIntegers = new int[4];
+>```
+
+<span style="font-size:16px;">
 Below are some examples.
 </span>
 
@@ -46,10 +64,26 @@ Console.WriteLine($"The array of strings: \t\t[{string.Join(", ", arrayOfStrings
 <span style="font-size:16px;">
 <h4 style="font-family:Copperplate;margin-bottom:6pt;">Accessing Array Values</h4>
 <code>Array</code> elements are accessed using <i>indexing</i>. Each of an array’s values are assigned an index. Its first element is assigned 0, and the succeeding elements are assigned indexes in <i>ascending order</i>.<br /><br />
-In C#, array elements are accessed using <code>[i]</code> where i is the index of the element to access. Given the array <kbd><code>SalesPerRegister</code> = [15, 4, 8, 9, 3]</kbd>, the following code will print 8 to the console:<br />
-<kbd>Console.Write(SalesPerRegister[2]);</kbd><br /><br />
-Indexing can also be used to alter an array’s elements. The following code changes the value 9 to 10.<br />
-<kbd>AgeOfCows[3] = 10;</kbd>
+In C#, array elements are accessed using <code>[i]</code> where i is the index of the element to access. Given the array <kbd><code>SalesPerRegister</code> = [15, 4, 8, 9, 3]</kbd>, the following code will print 8 to the console:</span>
+<br /><br />
+
+>```csharp
+>Console.Write(SalesPerRegister[2]);
+>```
+
+<span style="font-size:16px;">
+Indexing can also be used to alter an array’s elements. The following code changes the value 9 to 10.</span>
+<br /><br />
+
+>```csharp
+>AgeOfCows[3] = 10;
+>```
+
+#!markdown
+
+<span style="font-size:16px;">
+<h4 style="font-family:Copperplate;margin-bottom:6pt;">Properties and Methods</h4>
+When working with arrays, one of the most common operations is to each value. Many common languages provide the ability to access array values iteratively; In C#, there are a couple of ways to do this. The first is to get the array's <code>Length</code> for use in a loop. The second is to use a <code>foreach</code> loop, which you will see demonstrated later. Depending on the language, support for operations like this is varied, and in some cases (C, for example) it does not exist at all. Always be sure to have the documentation for the language you are working in handy - you can find C#'s documentation on arrays <a href="https://docs.microsoft.com/en-us/dotnet/api/system.array?view=net-6.0">here</a>.
 </span>
 
 #!csharp
@@ -57,13 +91,51 @@ Indexing can also be used to alter an array’s elements. The following code cha
 int[] SalesPerRegister = {15, 4, 8, 9, 3};
 
 //print 8
-Console.WriteLine(SalesPerRegister[2]);
+Console.WriteLine($"Original Value: {SalesPerRegister[2]}");
 
 //There was a new sale on register 3! Let's increment that value.
 SalesPerRegister[2]++;
 
 //print the new value
-Console.WriteLine(SalesPerRegister[2]); 
+Console.WriteLine($"Altered Value: {SalesPerRegister[2]}"); 
+
+//let's explore some builtin properties and methods
+
+Console.WriteLine("The Array:");
+
+//this is a loop to print the array
+for(int i = 0; i < SalesPerRegister.Length; i++) {
+    Console.Write($"{SalesPerRegister[i]} ");
+}
+
+Console.WriteLine("\nThe Array with foreach:");
+
+//this is a loop to print the array
+foreach (int x in SalesPerRegister) {
+    Console.Write($"{x} ");
+}
+
+//Reverse an array
+Array.Reverse(SalesPerRegister);
+
+Console.WriteLine("\nThe Array Reversed:");
+
+for(int i = 0; i < SalesPerRegister.Length; i++) {
+    Console.Write($"{SalesPerRegister[i]} ");
+}
+
+//Find the Index of a value
+Console.Write("\n");
+Console.WriteLine($"The Index of 4: {Array.IndexOf(SalesPerRegister, 4)}");
+
+//Clear an array
+Array.Clear(SalesPerRegister);
+
+Console.WriteLine("The Array Cleared:");
+
+for(int i = 0; i < SalesPerRegister.Length; i++) {
+    Console.Write($"{SalesPerRegister[i]} ");
+}
 
 #!markdown
 
@@ -78,22 +150,42 @@ Console.WriteLine(SalesPerRegister[2]);
 
 #!markdown
 
-<span style="font-size:14px;">
+<hr /><span style="font-size:14px;">
 <b style="font-size:16px;">Exercises</b> &emsp;|&emsp; <i>Place your answers in a <b>new</b> markdown cell below.</i>
 <ol>
-<li> What does the following code do?  <br />
-<code>int[] monthlySales = new int[];</code> 
+<li> What does the following code do?
+
+```csharp
+int[] monthlySales = new int[];
+```
+
 </li> 
-<li>Given the array <kbd><code>inchesOfSnow</code> = [7, 2, 0, 0, 1, 0, 5]</kbd>, what does the following code do? <br />
-<code>Console.WriteLine(inchesOfSnow[5]);</code>
+<li>Given the array <kbd><code>inchesOfSnow</code> = [7, 2, 0, 0, 1, 0, 5]</kbd>, what does the following code do?
+
+```csharp
+Console.WriteLine(inchesOfSnow[5]);
+```
+
 </li>
-<li> Given the above array, what does the following code do? <br />
-<code>inchesOfSnow[4] = 2;</code>
+<li> Given the above array, what does the following code do?
+
+```csharp
+inchesOfSnow[4] = 2;
+```
+
 </li>
-<li> What does the following code do? <br />
-<code>bool[] questionsCorrect = [true, false, false, true, true];</code>
+<li> What does the following code do?
+
+```csharp
+bool[] questionsCorrect = [true, false, false, true, true];
+```
+
 </li>
-<li>What does the following code do? <br />
-<code>bool[] questionsCorrect = {true, false, false, true, true};</code>
+<li>What does the following code do?
+
+```csharp
+bool[] questionsCorrect = {true, false, false, true, true};
+```
+
 </li>
 </span>
