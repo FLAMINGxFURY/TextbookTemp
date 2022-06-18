@@ -1,0 +1,193 @@
+#!markdown
+
+<span style="font-size:16px;">
+<h1 style="font-family:Copperplate">Applications of Constrained Data Structures</h1>
+Stacks and queues are the same as lists, as far as memory is concerned. They fill a contiguous block of memory. This means that lists can be used for the same purpose as a stack or a queue. So why do we use them?<br /> <br >
+Constraints on data structures communicate how a program is processing its data. Using a stack clarifies that this data is being processed in a LIFO (last in, first out) fashion. Similarly, when a programmer sees a queue being used, they understand that the data is being processed in a FIFO (first in, first out) fashion. In other words, using these structures <b><i>clarifies the intent</i></b> of the programmer and provides a <b><i>common understanding</i></b> for others that will work with the code later.<br /><br />
+Below are some examples of how these stacks and queues can be used.
+</span>
+
+#!markdown
+
+<span style="font-size:16px;">
+<h4 style="font-family:Copperplate">Detecting Syntax Errors With Stacks</h4>
+When we write code, we structure it with a variety of braces and parentheses. We can use stacks to detect incorrect use of these symbols.
+</span>
+
+#!csharp
+
+//A method to determine is a string has valid syntax using a stack. 
+bool IsValid(string code) {
+
+    //Create a stack to store the opening brackets.
+    Stack<char> stack = new Stack<char>();
+
+    //List of all opening brackets.
+    char[] openingBraces = new char[] {'{', '[', '(', '<'};
+
+    //List of all closing brackets.
+    char[] closingBraces = new char[] {'}', ']', ')', '>'};
+
+    //Loop through each character in the string.
+    foreach (char c in code) {
+        //If the character is an opening bracket, push it to the stack.
+        if (openingBraces.Contains(c)) {
+            stack.Push(c);
+        }
+        //If the character is a closing bracket, compare it to the last opening bracket in the stack.
+        else if (closingBraces.Contains(c)) {
+            //Placeholder variable.
+            char lastOpeningBracket;
+
+            //Try to pop the last opening bracket from the stack.
+            if (stack.TryPop(out lastOpeningBracket)) {
+                //If the last opening bracket is not the same as the closing bracket, the string is invalid.
+                if (Array.IndexOf(openingBraces, lastOpeningBracket) != Array.IndexOf(closingBraces, c)) {
+                    return false;
+                }
+            }
+            //If the stack is empty, this means that there is no opening bracket.
+            //Therefore, the string is invalid.
+            else return false;
+        }
+    }
+
+    //If the stack is not empty, the string is invalid.
+    if (stack.TryPeek(out char temp)) {
+        return false;
+    }
+
+    //If we make it to the end of the string, the string is valid.
+    return true;
+}
+
+#!csharp
+
+//Test the IsValid method with the following strings, or some of your own.
+
+//Test case strings. The first example should pass the test, the other two will not.
+string example1 = @"List<int> list = new List<int>() {1, 2, 3};";
+string example2 = @"List<int> list = new List<int>() {1, 2, 3;";
+string example3 = @"Listint> list = new List<int>() {1, 2, 3};";
+
+//The print statement below uses a ternary operator to print "valid" or "not valid".
+//You can read more about it here: https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/operators/conditional-operator
+Console.WriteLine($"String 1 is {(IsValid(example1) ? "" : "not ")}valid.");
+Console.WriteLine($"String 2 is {(IsValid(example2) ? "" : "not ")}valid.");
+Console.WriteLine($"String 3 is {(IsValid(example3) ? "" : "not ")}valid.");
+
+#!markdown
+
+<span style="font-size:16px;">
+In the example above, the use of a stack provides clarity about the intent of the original programmer: opening braces are added to the stack, and the topmost character is used to verify a closing brace when it is encountered.<br /><br />
+Another thing to note about stacks and queues is that, typically, the data they store is temporary. In the example above, the stack only holds a few characters which are regularly discarded.
+</span>
+
+#!markdown
+
+<span style="font-size:16px;">
+<h4 style="font-family:Copperplate">Using a Queue to Hold Print Jobs</h4>
+Queues support FIFO processing, which has different use cases. This next example demonstrates the use of a queue to temporarily hold print jobs until they are completed.
+</span>
+
+#!csharp
+
+//First, we need a print job class.
+public class PrintJob {
+    // For the sake of this example, we will be printing the "job" to the console.
+    public string toPrint { get; set; }
+
+    // This random value will be used for the delay, for demonstration purposes.
+    public int delayInMs = new Random().Next(50, 500);
+}
+
+#!csharp
+
+using System.Threading; //used for the delay
+
+//Now, we need a method to print a job.
+public void PrintJob(PrintJob job) {
+    //Wait the job's delay.
+    Thread.Sleep(job.delayInMs);
+    //Print the job to the console.
+    Console.WriteLine(job.toPrint);
+}
+
+#!csharp
+
+//Each word of this string will be a print job.
+string printJobString = "The quick brown fox jumps over the lazy dog.";
+
+//A queue to store the print jobs.
+Queue<PrintJob> printJobQueue = new Queue<PrintJob>();
+
+foreach (string word in printJobString.Split(' ')) {
+    //Create a new print job.
+    PrintJob job = new PrintJob();
+    //Set the print job's string to the current word.
+    job.toPrint = word;
+    //Add the print job to the queue.
+    printJobQueue.Enqueue(job);
+}
+
+//Go through the queue and print the jobs.
+PrintJob current = null;
+//While there are jobs in the queue, keep printing jobs.
+while (printJobQueue.TryPeek(out current)) {
+    //Print the current job.
+    PrintJob(current);
+    //Dequeue the job when it is done printing.
+    printJobQueue.Dequeue();
+}
+
+#!markdown
+
+<hr /><span style="font-size:14px;">
+<b style="font-size:16px;">Exercises</b> &emsp;|&emsp; <i>Place your answers in a <b>new</b> markdown cell below.</i>
+<ol>
+<li>List some other potetnial uses for stacks and queues.<br /><br /></li>
+<li> Explain what the following code accomplishes.
+
+```csharp
+foreach (int x in list) {
+    Console.Write($"{x} ");
+}
+```
+
+</li> 
+<li> Explain what the following code accomplishes.
+
+```csharp
+string s = "";
+while (stack.TryPop(out s)) {
+    Console.WriteLine(s);
+}
+```
+
+</li> 
+<li> Explain what the following code accomplishes.
+
+```csharp
+string s = "";
+char nextLetter;
+while (stack.TryPop(out nextLetter)) {
+    s += nextLetter;
+}
+```
+
+</li> 
+<li> Explain what the following code accomplishes.
+
+```csharp
+string s = "";
+if (queue.TryDequeue(out s)) {
+    Console.WriteLine(s);
+}
+else {
+    Console.WriteLine("Queue is empty.");
+}
+```
+
+</li> 
+<li> What is (are) the difference(s) between using <code>foreach</code> with a list to process data and using <code>Pop</code> in a stack or <code>Dequeue</code> in a queue?<br /><br /></li>
+</span>

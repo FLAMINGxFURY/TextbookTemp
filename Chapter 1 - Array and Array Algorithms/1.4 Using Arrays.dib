@@ -1,6 +1,106 @@
 #!markdown
 
-1. Use builtins to sort and search each row of a 2-D Jagged Array
-2. Implement Merge Sort
-3. Implement Binary Search
-4. Use Merge Sort and Binary Search for the same 2-D Jagged Array
+<span style="font-size:16px;">
+<h1 style="font-family:Copperplate">Using Arrays</h1>
+In this chapter, you will complete a series of exercises to demonstrate your knowledge. The array below will be used for a few of the exercises.
+</span>
+
+#!csharp
+
+// The following block of code will read in the array from a file
+
+using System.IO;
+
+int[][] jagged = new int[20][];
+
+using(var reader = new StreamReader(@"./Assets/inputJagged.csv")) {
+    for (int i = 0; i < 20; i++) {
+        var line = reader.ReadLine();
+        jagged[i] = line.Split(',').Select(Int32.Parse).ToArray();
+    }
+}
+
+#!markdown
+
+<span style="font-size:16px;">
+<h4 style="font-family:Copperplate;margin-bottom:6pt;">1. Using Builtin Methods</h4>
+In the following code block, do the following:
+</span>
+
+1. Sort each row of the jagged array.
+2. Print the index of the integer 256 for each row, if it exists. (Print -1 if it does not.)
+
+#!csharp
+
+// 1. Using Builtin Methods
+
+#!markdown
+
+<span style="font-size:16px;">
+<h4 style="font-family:Copperplate;margin-bottom:6pt;">2. Create a Divide and Conquer Sorting Method</h4>
+For this section, you have a choice. You can choose to implement either Quick Sort or Merge Sort to sort an array of integers. Quick Sort which was discussed in 1.3, does the following:
+</span>
+
+1. It selects an element in the array. This can be either a random or a predetermined element: e.g., the array's first or last element. This is called the <code>pivot</code>.
+2. It iterates over the rest of the array, placing values less than the <code>pivot</code> to the left of it, and values greater to the right. 
+3. It repeats steps 1 and 2 for both subarrays to the left and right of the pivot, until the subarrays are of size 1.
+4. At that point, the array is sorted.
+
+<span style="font-size:16px;">
+The other option is Merge Sort. Merge Sort recursively splits the array into smaller pieces, and then reconstructs the array in a sorted manner, like so:
+</span>
+
+1. It splits the array into two halves, left and right.
+2. It repeats step 1 for both the left and right half, and continues to do so until there are arrays of size 1.
+3. It compares the two values at index 0 of the left and right half, and places the smaller of the two values at the start of a new array. Then it increments the index for that half.
+4. It repeats step 3 until the end of one of the halves is reached. The rest of the other half is appended to the end of the new list.
+5. It repeats steps 3 and 4 for each split half. Remember, it split the array all the way down to size 1 - now it is working all the way back up.
+6. At this point, the array is sorted.
+
+<span style="font-size:16px;">
+Method headers have been provided below to help you get started. You may want (or need) to create helper methods, depending on your approach.
+</span>
+
+#!csharp
+
+void QuickSort(/* Think about what you need here */) {
+
+}
+
+#!csharp
+
+int[] MergeSort(/* Think about what you need here */) {
+
+}
+
+#!markdown
+
+<span style="font-size:16px;">
+<h4 style="font-family:Copperplate;margin-bottom:6pt;">3. Create Binary Search</h4>
+For this section, you will implement your own Binary Search algorithm. Remember, this is what Binary Search does:
+</span>
+
+1. Start at the array's middle value. If this value is the target, stop here.
+2. If the middle value is greater than the target value, check the left (lesser) half of the array. If it is less, check the right (greater) half.
+3. Repeat steps 1 and 2 until you find the value.
+
+#!csharp
+
+// 3. Binary Search
+int BinarySearch(/* Think about what you need here */) {
+    
+}
+
+#!markdown
+
+<span style="font-size:16px;">
+<h4 style="font-family:Copperplate;margin-bottom:6pt;">4. Using Your Methods</h4>
+In the following code block, do the following:
+</span>
+
+1. Sort each row of the jagged array, using your Quick Sort or Merge Sort.
+2. Using Binary Search, print the index of the integer 256 for each row, if it exists. (Print -1 if it does not.)
+
+#!csharp
+
+// 4. Using Your Methods

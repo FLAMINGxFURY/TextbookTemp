@@ -1,0 +1,205 @@
+#!markdown
+
+<span style="font-size:16px;">
+<h1 style="font-family:Copperplate">Stacks and Queues</h1>
+<code>Stacks</code> and <code>Queues</code> are similar to <code>Lists</code> in that they can store any number of items, without specifying an initial size. However, <code>Stacks</code> and <code>Queues</code> are <b><i>Constrained Data Structures</i></b>: data entered and retreived from them occurs in a specific order.
+</span>
+
+#!markdown
+
+<span style="font-size:16px;">
+<h4 style="font-family:Copperplate">Stacks</h4>
+Stacks are a "last-in, first-out" (<code>LIFO</code>) data structure. Some things that may come to mind when you hear "stack" are a stack of plates, a stack of books, or a stack of cards. These are all good examples: items are put on "top" of the stack, and can only be removed from the "top".
+</span>
+
+#!markdown
+
+<span style="font-size:16px;">
+<h4 style="font-family:Copperplate">Stack Operations</h4>
+Stacks have three main operations for manipulating their contents: a <code>push</code> operation, a <code>pop</code> operation, and a <code>peek</code> operation.
+<ul>
+<li>
+<code>Push</code> adds an item to the top of the stack.
+</li>
+<li>
+<code>Pop</code> removes an item from the top of the stack and returns the value.
+</li>
+<li>
+<code>Peek</code> returns the item at the top of the stack without removing it.
+</li>
+</ul>
+</span>
+
+#!markdown
+
+<span style="font-size:16px;">
+<h4 style="font-family:Copperplate">Stacks in C#</h4>
+In C#, stacks can be initialized empty or with a list of items. You can find the C# documentation for stacks <a href="https://docs.microsoft.com/en-us/dotnet/api/system.collections.stack.-ctor?view=net-6.0">here</a>. 
+
+#!csharp
+
+//An empty stack of integers
+Stack<int> integerStack = new Stack<int>();
+
+//Add values to the stack
+integerStack.Push(1);
+integerStack.Push(2);
+integerStack.Push(3);
+
+//Peek at the top of the stack
+Console.WriteLine($"{integerStack.Peek()} is at the top of the stack.");
+
+//Pop all values from the stack
+while (integerStack.Count > 0) {
+    Console.WriteLine($"Popped {integerStack.Pop()} from the stack.");
+}
+
+#!csharp
+
+string sentence = "The quick brown fox jumps over the lazy dog.";
+
+//Create a stack from the sentence
+//Here, the string is being treated as a character array
+Stack<string> sentenceStack = new Stack<string>(sentence.Split(' ')); 
+
+string reversedSentence = "";
+
+//Pop all values from the stack and add them to the reversed sentence
+while (sentenceStack.Count > 0) {
+    reversedSentence += sentenceStack.Pop() + ' ';
+}
+
+Console.WriteLine(reversedSentence);
+
+#!markdown
+
+<span style="font-size:16px;">
+<h4 style="font-family:Copperplate">Queues</h4>
+Queues, by contrast, are a "first-in, first-out" (<code>FIFO</code>) data structure. A line at the movie theatre is an example of a queue. Instead of inserting and removing from the "top", we insert items at a queue's "end" and remove them from its "front".
+
+#!markdown
+
+<span style="font-size:16px;">
+<h4 style="font-family:Copperplate">Queue Operations</h4>
+Queues have three main operations for manipulating their contents: a <code>enqueue</code> operation, a <code>dequeue</code> operation, and a <code>peek</code> operation.
+<ul>
+<li>
+<code>Enqueue</code> adds an item to the back of the queue.
+</li>
+<li>
+<code>Dequeue</code> removes an item from the front of the queue and returns the value.
+</li>
+<li>
+<code>Peek</code> returns the item at the front of the queue without removing it.
+</li>
+</ul>
+</span>
+
+#!markdown
+
+<span style="font-size:16px;">
+<h4 style="font-family:Copperplate">Queues in C#</h4>
+In C#, queues can be initialized empty or with a list of items. You can find the C# documentation for queues <a href="https://docs.microsoft.com/en-us/dotnet/api/system.collections.queue.-ctor?view=net-6.0">here</a>.
+</span>
+
+#!csharp
+
+//An empty queue of integers
+Queue<int> integerQueue = new Queue<int>();
+
+//Add values to the queue
+integerQueue.Enqueue(1);
+integerQueue.Enqueue(2);
+integerQueue.Enqueue(3);
+
+//Peek at the front of the queue
+Console.WriteLine($"{integerQueue.Peek()} is at the front of the queue.");
+
+//Dequeue all values from the queue
+while (integerQueue.Count > 0) {
+    Console.WriteLine($"Dequeued {integerQueue.Dequeue()} from the queue.");
+}
+
+#!markdown
+
+<span style="font-size:16px;">
+<h4 style="font-family:Copperplate">Try Methods</h4>
+C# stacks and queues also have <code>TryPeek</code> and <code>TryDequeue</code> (or <code>TryPop</code> in the case of stacks) operations. These operations are similar to <code>Peek</code> and <code>Dequeue</code>, but they return <kbd>false</kbd> if the queue is empty. These methods require a placeholder to store the item's value if they return <kbd>true</kbd>. <br /><br />
+These methods are useful for checking if an item is in the stack or queue to avoid the program throwing an exception.
+</span>
+
+#!csharp
+
+string word = "Quinoa";
+
+//Create a queue from the word
+Queue<char> wordQueue = new Queue<char>(word);
+
+//Use TryPeek to peek at the front of the queue
+char firstCharacter;
+if(wordQueue.TryPeek(out firstCharacter)) {
+    Console.WriteLine($"\"{firstCharacter}\" is at the front of the queue.");
+}
+
+//Use TryDequeue to dequeue all values from the queue until the queue is empty
+char dequeuedCharacter;
+while (wordQueue.TryDequeue(out dequeuedCharacter)) {
+    Console.WriteLine($"Dequeued \"{dequeuedCharacter}\" from the queue.");
+}
+
+//Use TryPeek to peek at the front of the queue
+char peekCharacter;
+if(wordQueue.TryPeek(out peekCharacter)) {
+    Console.WriteLine($"\"{peekCharacter}\" is at the front of the queue.");
+}
+else {
+    Console.WriteLine("The queue is empty.");
+}
+
+#!markdown
+
+<hr /><span style="font-size:14px;">
+<b style="font-size:16px;">Exercises</b> &emsp;|&emsp; <i>Solve the exercises in the provided </i><code>code</code><i> cells.</i> <br /><br />
+1. Create a queue and fill it with the first 5 digits of pi, excluding the decimal point. 
+</span>
+
+#!csharp
+
+// Exercise 1
+
+#!markdown
+
+<span style="font-size:14px;">2. Print the value <kbd>4</kbd> to the screen using the queue from exercise 1. <i>Hint: There are multiple ways to solve this problem. Try a few different methods.</i></span>
+
+#!csharp
+
+// Exercise 2
+
+#!markdown
+
+<span style="font-size:14px;">3. Create a stack from the given array.</span>
+
+#!csharp
+
+// Exercise 3
+string[] fruits = { "apple", "banana", "cherry", "durian", "elderberry", "fig"};
+
+#!markdown
+
+<span style="font-size:14px;">4. Print all of the values in the stack using a loop.</span>
+
+#!csharp
+
+// Exercise 4
+
+#!markdown
+
+<span style="font-size:14px;">5. What happens when you <code>Peek</code> the stack? What about when you use <code>TryPeek</code>? Demonstrate this in the code blocks, and then record your answer in a markdown cell.</span>
+
+#!csharp
+
+// Exercise 5a
+
+#!csharp
+
+// Exercise 5b

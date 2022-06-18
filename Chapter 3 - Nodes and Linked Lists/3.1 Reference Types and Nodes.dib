@@ -1,0 +1,13 @@
+#!markdown
+
+<span style="font-size:16px;">
+<h1 style="font-family:Copperplate">Reference Types and Nodes</h1>
+A reference type variable stores the integer memory address of the location of its corresponding object. Arrays and lists are reference types: the integer stored is the memory address of the first element of the collection. New instances of classes are also reference types.
+</span>
+
+#!markdown
+
+<span style="font-size:16px;">
+<h4 style="font-family:Copperplate">Arrays of Objects</h4>
+
+</span>

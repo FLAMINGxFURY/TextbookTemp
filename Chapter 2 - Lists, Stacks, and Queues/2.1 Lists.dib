@@ -1,0 +1,201 @@
+#!markdown
+
+<span style="font-size:16px;">
+<h1 style="font-family:Copperplate">Lists</h1>
+<code>Lists</code> are similar to <code>arrays</code>: they store multiple instances of the same type of object. Lists have an additional feature: they don't have a fixed size. This means that, unlike arrays, they can grow and shrink as needed.
+</span>
+
+#!markdown
+
+<span style="font-size:16px;">
+<h4 style="font-family:Copperplate;margin-bottom:6pt;">Creating a New List</h4>
+Lists are declared differently than arrays. Here is the code to declare a list:
+</span>
+<br /><br />
+
+>```csharp
+>List<int> listOfIntegers = new List<int>();
+>```
+
+<span style="font-size:16px;">
+First, we specify the type contained in the list within the angle brackets (<code><></code>). Then, we use the <code>new</code> keyword to create the list. Finally, we call List's constructor with parentheses (<code>()</code>), just like we would any other class. <br /><br />
+Lists can also be initialized with values, like arrays:
+</span>
+<br /><br />
+
+>```csharp
+>List<int> listOfIntegers = new List<int>() { 1, 2, 3 };
+>```
+
+<span style="font-size:16px;">
+Below are some more examples:
+</span>
+
+#!csharp
+
+//An empty list of strings
+List<string> listOfStrings = new List<string>();
+
+//A list of doubles initialized with values
+List<double> listOfDoubles = new List<double>() { 1.1, 2.2, 3.3 };
+
+//An array of integers
+int[] arrayOfInts = new int[] { 1, 2, 3 };
+
+//Use the array to create a new list of integers
+List<int> listOfInts = new List<int>(arrayOfInts);
+
+#!markdown
+
+<span style="font-size:16px;">
+<h4 style="font-family:Copperplate;margin-bottom:6pt;">List Properties and Methods</h4>
+C#'s List class provides an assortment of methods to manipulate a list's contents, including some that are similar or identical to that of arrays. The C# documentation for Lists can be found <a href="https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1.-ctor?view=net-6.0">here</a>. We will be covering <code>Add()</code>, <code>Insert()</code>, <code>Remove()</code>, and <code>RemoveAt()</code> below.
+
+#!markdown
+
+<span style="font-size:16px;">
+<h4 style="font-family:Copperplate;margin-bottom:6pt;">Adding Values to a List</h4>
+To add a value to a list, we can use the <code>Add()</code> method to append a value to the end of the list. Alternatively, we can use the <code>Insert()</code> method to insert a value at a specific index in the list. <code>Insert()</code> will throw an error if the index is <i>out of bounds</i>. The following example demonstrates both methods:
+</span>
+
+#!csharp
+
+List<string> listOfStrings = new List<string>() { "one", "two", "three" };
+
+Console.WriteLine(string.Join(", ", listOfStrings));
+
+//Append values to the end of the list
+listOfStrings.Add("four");
+listOfStrings.Add("five");
+
+Console.WriteLine(string.Join(", ", listOfStrings));
+
+//Insert "apple" at index 2
+listOfStrings.Insert(2, "apple");
+
+Console.WriteLine(string.Join(", ", listOfStrings));
+
+#!markdown
+
+<span style="font-size:16px;">
+<h4 style="font-family:Copperplate;margin-bottom:6pt;">Removing Values from a List</h4>
+To remove a value from a list, we can either use the <code>Remove()</code> method to remove the first instance of a value from the list if that value exists. Alternatively, we can use the <code>RemoveAt()</code> method to remove a value at a specific index in the list. <code>RemoveAt()</code> will throw an error if the index is <i>out of bounds</i>. The following example demonstrates both methods:
+
+#!csharp
+
+List<int> listOfInts = new List<int>() { 1, 2, 7, 6, 9 };
+
+Console.WriteLine(string.Join(", ", listOfInts));
+
+//Remove 2 from the list
+listOfInts.Remove(2);
+
+Console.WriteLine(string.Join(", ", listOfInts));
+
+//Try to remove 10 from the list
+listOfInts.Remove(10);
+
+Console.WriteLine(string.Join(", ", listOfInts));
+
+//Remove the value at index 1
+listOfInts.RemoveAt(1);
+
+Console.WriteLine(string.Join(", ", listOfInts));
+
+#!markdown
+
+<span style="font-size:16px;">
+<h4 style="font-family:Copperplate;margin-bottom:6pt;">Out of Bounds Errors</h4>
+<code>Insert()</code> and <code>RemoveAt()</code> will throw an error if the index is outside the bounds of the list. In the following examples, Try/Catch blocks are used to catch the error and print a message to the console. What happens when you run only the contents of the try block?
+
+#!csharp
+
+//The list to operate on
+List<char> listOfChars = new List<char>() { 'b', 'o', 'u', 'n', 'd', 's' };
+
+#!csharp
+
+//Try to insert "a" at index -1
+try {
+    listOfChars.Insert(-1, 'a');
+}
+catch (ArgumentOutOfRangeException) {
+    Console.WriteLine("Cannot insert at negative index");
+}
+
+#!csharp
+
+//Try to remove from index 14
+try {
+    listOfChars.RemoveAt(14);
+}
+catch (ArgumentOutOfRangeException) {
+    Console.WriteLine("Remove index out of bounds");
+}
+
+#!markdown
+
+<span style="font-size:16px;">
+<h4 style="font-family:Copperplate;margin-bottom:6pt;">Lists in Memory</h4>
+As it does for arrays, C# stores each list in a contiguous block of memory. When a list is created, it is allocated a block of memory. This block of memory grows and shrinks as needed. When this block of memory no longer fits where it is (i.e., there is something else in memory in front of the list), the list will be moved to a different location in memory. <br /><br />
+The implementation of these operations depend on the language being used. In managed languages like C#, the garbage collector handles this for you. In unmanaged languages like C, the programmer must explicitly manage memory allocation.
+</span>
+
+#!markdown
+
+<hr /><span style="font-size:14px;">
+<b style="font-size:16px;">Exercises</b> &emsp;|&emsp; <i>Place your answers in a <b>new</b> markdown cell below.</i>
+<ol>
+<li> What does the following code do?
+
+```csharp
+List<char> letters = new List<char>();
+```
+
+</li> 
+<li>Use the following list for the exercises below: <kbd>list = [9, 3, 5, 1, 2, 4, 7, 6, 8]</kbd><br />
+What does the list look like after the following code is executed?
+
+```csharp
+list.Add(27);
+```
+
+</li>
+<li> What does the list look like after the following code is executed?
+
+```csharp
+list.Insert(3, 99);
+```
+
+</li>
+<li> What does the list look like after the following code is executed?
+
+```csharp
+list.Remove(3);
+```
+
+</li>
+<li> What does the list look like after the following code is executed?
+
+```csharp
+list.Remove(10);
+```
+
+</li>
+<li> What does the list look like after the following code is executed?
+
+```csharp
+list.RemoveAt(2);
+```
+
+</li>
+<li> What does the list look like after the following code is executed?
+
+```csharp
+list.RemoveAt(14);
+```
+
+</li>
+<li> Give some examples of builtin <code>List</code> methods in C#. What do they do?
+</li>
+</span>

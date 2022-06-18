@@ -8,9 +8,10 @@
 #!markdown
 
 <span style="font-size:16px;">
-<h4 style="font-family:Copperplate;margin-bottom:6pt;">Multidimenstional Arrays</h4>
+<h4 style="font-family:Copperplate;margin-bottom:6pt;">Multidimensional Arrays</h4>
 <code>Multidimensional Arrays</code> in C# fill the dimensions provided at declaration. The following array has the dimensions <code>[2,3]</code>:
-<br /><br />
+<br />
+
 <img src="https://raw.githubusercontent.com/FLAMINGxFURY/TextbookTemp/main/Chapter%201%20-%20Array%20and%20Array%20Algorithms/Assets/csharp-2d-array-index.webp" style="width:90%;background:rgba(255,255,255,1);" /> <br /><a href="https://www.programiz.com/csharp-programming/multidimensional-arrays" style="font-size:11px;">Source: Programiz.com</a>
 </span>
 
@@ -18,7 +19,7 @@
 
 <span style='font-size:16px'>
 <h4 style="font-family:Copperplate;margin-bottom:6pt;">Declaring Multidimensional Arrays</h4>
-In C#, mulitdimensional arrays are declared using a comma (<code>,</code>) within the brackets:
+In C#, multidimensional arrays are declared using a comma (<code>,</code>) in the brackets:
 </span>
 <br /><br />
 
@@ -57,7 +58,7 @@ You can also use the <code>new</code> keyword. To do so, you must use a comma (<
 
 <span style="font-size:16px;">
 <h4 style="font-family:Copperplate;margin-bottom:6pt;">Accessing Values in Multidimensional Arrays</h4>
-Values in Multidimensional Arrays are indexed based on each dimension. A 2-dimensional array will have 2 indices for each value; a 5-dimensional array will have 5 indices for each value. Consider the following 3-Dimensional array:<br />
+Values in multidimensional arrays are indexed by dimension. A 2-dimensional array will have 2 indices for each value; a 5-dimensional array will have 5 indices for each value. Consider the following 3-Dimensional array:<br />
 [
 <table>
 <tbody>
@@ -115,9 +116,13 @@ The following code will access the highlighted zero:</span>
 
 <span style="font-size:16px;">
 <h4 style="font-family:Copperplate;margin-bottom:6pt;">Properties and Methods for Multidimensional Arrays</h4>
-Multidimensional Arrays share functions with the base Array class. Many of the functions act as if the array is one-dimensional. For example, the <code>Length</code> property will return the total number of values in the entire array.<br /><br />
-There are some Array methods that are specific to Multidimensional Arrays. A couple examples in C# are <code>GetLength()</code> and the <code>Rank</code> property. Be sure to reference the <a href="https://docs.microsoft.com/en-us/dotnet/api/system.array?view=net-6.0">documentation</a> for the language you are working with.
+Multidimensional arrays share functions with the base Array class. Many functions act as if the array is one-dimensional. For example, the <code>Length</code> property returns the total number of values in the entire array.
+Some Array methods are specific to multidimensional arrays. A couple C# examples are <code>GetLength()</code> and the <code>Rank</code> property. Be sure to reference the <a href="https://docs.microsoft.com/en-us/dotnet/api/system.array?view=net-6.0">documentation</a> for the language you are working with.
 </span>
+
+#!markdown
+
+<span style="color:red;font-weight:bold;">Redo this example.</span>
 
 #!csharp
 
@@ -169,13 +174,15 @@ for(int i = 0; i < chess.GetLength(0); i++) {       //for each row in the board
 <span style="font-size:16px;">
 <h4 style="font-family:Copperplate;margin-bottom:6pt;">Jagged Arrays</h4>
 <code>Jagged Arrays</code> are arrays of multiple dimension that can have irregular size. In the following example, you can see that each row in the array has a different size:
-<br /><br /><img src="https://raw.githubusercontent.com/FLAMINGxFURY/TextbookTemp/main/Chapter%201%20-%20Array%20and%20Array%20Algorithms/Assets/JagArr.jpg" style="width:90%;" /><br /><a href="https://www.geeksforgeeks.org/jagged-array-or-array-of-arrays-in-c-with-examples/" style="font-size:11px;">Source: GeeksForGeeks</a>
+<br />
+
+<img src="https://raw.githubusercontent.com/FLAMINGxFURY/TextbookTemp/main/Chapter%201%20-%20Array%20and%20Array%20Algorithms/Assets/JagArr.jpg" style="width:90%;" /><br /><a href="https://www.geeksforgeeks.org/jagged-array-or-array-of-arrays-in-c-with-examples/" style="font-size:11px;">Source: GeeksForGeeks</a>
 </span>
 
 #!markdown
 
 <span style="font-size:16px;">
-When considering how you interact with Jagged Arrays, it may help to think of them as arrays of arrays.<br />
+When using Jagged Arrays, it may help to think of them as arrays of arrays.<br />
 <h4 style="font-family:Copperplate;margin-bottom:6pt;">Declaring Jagged Arrays</h4>
 Jagged Arrays are declared by sequencing sets of <code>[]</code>:</span>
 <br /><br />
@@ -186,34 +193,41 @@ Jagged Arrays are declared by sequencing sets of <code>[]</code>:</span>
 
 <span style="font-size:16px;">
 <h4 style="font-family:Copperplate;margin-bottom:6pt;">Initializing Jagged Arrays</h4>
-Jagged Arrays can be initialized in steps (and must be to acheive a jagged shape.) The following code mimics the shape of the diagram above: </span>
-<br /><br />
+Jagged arrays can be initialized in steps (and must be to achieve a jagged shape.) The following code mimics the shape of the diagram above: </span>
 
->```csharp
->int[][] jagInts2D = new int[4][];
->
->jagInts2D[0] = new int[3];
->jagInts2D[1] = new int[2];
->jagInts2D[2] = new int[5];
->jagInts2D[3] = new int[1];
->```
+#!csharp
+
+int[][] jagInts2D = new int[4][];
+
+jagInts2D[0] = new int[3];
+jagInts2D[1] = new int[2];
+jagInts2D[2] = new int[5];
+jagInts2D[3] = new int[1];
+
+//.NET Interactive will print something for us when used at the end of a code block like so:
+jagInts2D
+
+#!markdown
 
 <span style="font-size:16px;">
-Jagged Arrays must be initialized with the <code>new</code> keyword. However, the deepest layer of the array may be initialized with <code>{}</code>. For example, the above example can be refactored to:</span>
-<br /><br />
+Jagged arrays must be initialized with the <code>new</code> keyword. However, the array's deepest layer may be initialized with <code>{}</code>. For example, the above example can be rewritten as:</span>
 
->```csharp
->int[][] jagInts2D = new int[4][];
-> 
->jagInts2D[0] = {0, 1, 2};
->jagInts2D[1] = {6, 4};
->jagInts2D[2] = {1, 7, 6, 8, 9};
->jagInts2D[3] = {5};
->```
+#!csharp
+
+int[][] jagInts2D = new int[4][];
+ 
+jagInts2D[0] = new int[] {0, 1, 2};
+jagInts2D[1] = new int[] {6, 4};
+jagInts2D[2] = new int[] {1, 7, 6, 8, 9};
+jagInts2D[3] = new int[] {5};
+
+jagInts2D
+
+#!markdown
 
 <span style="font-size:16px;">
 <h4 style="font-family:Copperplate;margin-bottom:6pt;">Accessing Values in Jagged Arrays</h4>
-Similarly to Multidimensional Arrays, Jagged Arrays are indexed based on dimension, following the same paradigm as declaration. The following code will access the 7 in <code>jagInts2D</code>:</span>
+Like multidimensional arrays, jagged arrays are indexed based on dimension, following the same paradigm as declaration. The following code will access the 7 in <code>jagInts2D</code>:</span>
 <br /><br />
 
 >```csharp
@@ -221,7 +235,7 @@ Similarly to Multidimensional Arrays, Jagged Arrays are indexed based on dimensi
 >```
 
 <span style="font-size:16px;">
-Like Multidimensional Arrays, Jagged Arrays can have any number of dimensions. The example below demonstrates a 3-Dimensional Jagged Array.
+Like multidimensional arrays, jagged arrays can have any number of dimensions. The example below creates and manipulates a 3-dimensional jagged array.
 </span>
 
 #!csharp
@@ -258,7 +272,7 @@ for(int i = 0; i < arr.Length; i++) {   //for each plane
 
 <span style="font-size:16px;">
 <h4 style="font-family:Copperplate;margin-bottom:6pt;">Mixed Implementations</h4>
-Multidimensional Arrays and Jagged Arrays can be mixed however you like. Below is a Jagged Multidimensional Array:
+multidimensional arrays and jagged arrays can be mixed however you like. Below is a jagged multidimensional array:
 </span>
 
 #!csharp
@@ -281,7 +295,7 @@ for(int i = 0; i < mdJagged.GetLength(0); i++) {   //for each plane
 #!markdown
 
 <span style="font-size:16px;">
-And a Jagged Array of Multidimensional Arrays:
+The following shows a jagged array of multidimensional arrays:
 </span>
 
 #!csharp
