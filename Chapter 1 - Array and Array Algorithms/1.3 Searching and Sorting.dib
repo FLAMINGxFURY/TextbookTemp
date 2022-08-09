@@ -2,12 +2,12 @@
 
 <span style="font-size:16px;">
 <h1 style="font-family:Copperplate">Searching and Sorting</h1>
-A key operation when working with an array is finding one of its items by value. Chapter 1.1 showcases the <code>Array.IndexOf()</code> method, which will tell you <i>if</i> a value is in the array, and <i>where</i> in the array it is. To see how this works, first, run the code block below so that we have an array to start with.
+Arrays are commonly searched to see if they contain a value of interest: for example, a social security number or some other value that <i>keys</i>, or associates, a row of data with a person, place, or thing of interest. Chapter 1.1 showcases the <code>Array.IndexOf()</code> method, which determines <i>if</i> a value is in an array, and, if so, <i>where</i> in the array it is. To see how this method could work, first, run the code block below to create an array for the examples that follow it.
 </span>
 
 #!csharp
 
-// The following block of code will read in the array from a file
+// The following block of code uses the contents of a file to initialize inputArray
 
 using System.IO;
 
@@ -23,7 +23,7 @@ using(var reader = new StreamReader(@"./Assets/inputArray.txt")) {
 #!markdown
 
 <span style="font-size:16px;">
-The simplest way to search an array is to check each value, and go to the next if we don't find a match. Below is code to mimic <code>Array.IndexOf()</code>. Try it for yourself!
+The simplest way to search an array is to check each value in ascending order, going to the next until a match is found or quitting if all checks fail. Below is code to mimic <code>Array.IndexOf()</code>. Try it for yourself!
 </span>
 
 #!csharp
@@ -31,7 +31,7 @@ The simplest way to search an array is to check each value, and go to the next i
 // Run this code block before trying to use FindIndex()
 
 int FindIndex(int[] arrayToIndex, int find) {
-    int index = -1;     //The method will return -1 if it doesn't find an index.
+    int index = -1;     //The method returns -1 if it doesn't find an index.
     
     for(int i = 0; i < arrayToIndex.Length; i++) {
         if(arrayToIndex[i] == find) {   //we found a match!
@@ -51,10 +51,11 @@ Console.WriteLine($"Using IndexOf():\t\t {Array.IndexOf(inputArray, 409)}");
 #!markdown
 
 <span style="font-size:16px;">
-<h4 style="font-family:Copperplate;margin-bottom:6pt;">Time and Space Complexity</h4>
-Searching is one of the first algorithms you learn in computer science. Algorithms are commonly characterized using two metrics. One, <b>Time Complexity</b> measures how many operations an algorithm might need to complete in relation to the size of its input. The other, <b>Space Complexity</b> measures how much memory an algorithm might use during its runtime.<br /><br />
-Consider the <code>FindIndex()</code> method above. <br /><br />
-<i>How many operations will it take to complete?</i> Assuming the worst case, we will need to examine each of an array's elements. This assertion is denoted using Big-O notation, as follows:</span> 
+<h4 style="font-family:Copperplate;margin-bottom:6pt;">Quantifying Efficiency: Time and Space Complexity</h4>
+<code>FindIndex</code> implements one of many well-known strategies, or <i>algorithms</i>, for doing searches. As a rule, multiple algorithms have been devised for common problems like searching, in part because algorithms perform differently for different collections of data.</br></br>
+Two <i>metrics</i> (measures) are commonly used to characterize an algorithm’s efficiency. One, <b>Time Complexity</b> measures how many operations an algorithm might need to complete in relation to the size of its input. The other, <b>Space Complexity</b> measures how much memory an algorithm might use during its runtime. Depending on context, these metrics may be used to characterize an algorithm’s worst-case or its expected (i.e., average) behavior. They may also be specified relative to assumptions about the algorithm’s input. In every case, the assumptions that underly a metric’s use should be clearly specified as a part of an analysis of an algorithm’s behavior.<br /><br />
+Consider, for example, the time and space complexity of <code>FindIndex()</code>, relative to an arbitrary array of n elements.<br /><br />
+<i>How many operations will it take to complete?</i> In the worst case, <code>FindIndex()</code>will need to examine all of an n-element array's elements to conclude that a value is missing. This assertion is denoted using Big-O notation, as follows:</span> 
 <br /><br />
 
 >$O(n)$
@@ -66,8 +67,8 @@ where <i>n</i> is the length of the input.<br /><br />
 
 >$O(2)$
 
-<span style="font-size:16px;"> <br /><br />
-You can learn more about time complexity in this <a href="https://www.khanacademy.org/computing/computer-science/algorithms/asymptotic-notation/a/asymptotic-notation">chapter</a> from Khan Academy, and more about Big-O notation in this <a href="https://www.khanacademy.org/computing/computer-science/algorithms/asymptotic-notation/a/big-o-notation">section</a> of that chapter. <br />
+<span style="font-size:16px;">
+Consult (e.g.) Khan Academy’s references on <a href="https://www.khanacademy.org/computing/computer-science/algorithms/asymptotic-notation/a/asymptotic-notation">time complexity</a> and <a href="https://www.khanacademy.org/computing/computer-science/algorithms/asymptotic-notation/a/big-o-notation">Big-O notation</a> for more information on both topics.
 
 <img src="https://raw.githubusercontent.com/FLAMINGxFURY/TextbookTemp/main/Chapter%201%20-%20Array%20and%20Array%20Algorithms/Assets/timecomplexity.jpg" style="width:90%;" /> <br /><a href="https://www.bigocheatsheet.com/" style="font-size:11px;">Source: Big-O Cheat Sheet</a>
 </span>
@@ -76,7 +77,7 @@ You can learn more about time complexity in this <a href="https://www.khanacadem
 
 <span style="font-size:16px;">
 <h4 style="font-family:Copperplate;margin-bottom:6pt;">Sorting</h4>
-Sometimes, you will need to write code that orders the items in your array. In C#, you can do this with the <code>Array.sort()</code> method.
+A second common operation on arrays, sorting, is typically used to make arrays easier to search and audit: e.g., to check for duplicate, missing, or invalid values. In C#, you can do this with the <code>Array.sort()</code> method.
 </span>
 
 #!csharp
@@ -94,8 +95,9 @@ Console.WriteLine(String.Join(", ", sortedArray));
 #!markdown
 
 <span style="font-size:16px;">
-Sorting an array takes more operations than searching an array. In general, this is because the proper position of each of an array’s values depends on the values of all other elements in the array. The following code is an example of <b>Bubble Sort</b>, one of the simplest sorting algorithms. <br /><br />
-In Bubble Sort, the first value in the array is compared to the next value. The greater of the two is moved forward and compared to the next value, until the end of the array is reached. In this way, the greatest value eventually "bubbles up" to the top of the array. The greatest value is stored at the end of the array, and the algorithm starts from the beginning, ignoring that last value.
+Sorting an array takes more operations than searching an array. Intuitively, sorting takes more work because the proper position of each of an array’s values depends on the values of that array’s other elements. <br /><br /> 
+The following code is an example of <b>Bubble Sort</b>, one of the simplest sorting algorithms. In Bubble Sort, the first value in the array is compared to the next value. The greater of the two is moved forward and compared to the next value, until the end of the array is reached. In this way, the greatest value eventually "bubbles up" to the top of the array. The greatest value is moved to the end of the array, and the algorithm restarts from the beginning, ignoring that last value.
+
 </span>
 
 #!csharp
@@ -212,15 +214,15 @@ because there is a chance that <b>EVERY</b> pivot will be either the lowest or h
 #!markdown
 
 <span style="font-size:16px;">
-Like sorts, searches can also be optimized using a divide-and-conquer method. <code>Array.BinarySearch()</code> is one of these. Binary Search expects a <b>sorted</b> input. Based on the fact that an array is sorted, it does the following:
+Like sorts, searches can be optimized using a divide-and-conquer strategy. <code>Array.BinarySearch()</code> is one of these. Binary Search expects a <b>sorted</b> input. Based on the assumption that an array is sorted, it does the following:
 </span>
 
 1. Start at the middle value of the array. If this value is the requested value, stop here.
 2. If the middle value is greater than the requested value, check the array’s left (lesser) half. If it is less, check the right (greater) half.
-3. Repeat steps 1 and 2 until you find the value.
+3. Repeat steps 1 and 2 until the value is found, or identified as being missing from the array.
 
 <span style="font-size:16px;">
-This splits the problem into smaller parts, and results in a time complexity of:
+This splits the problem into increasingly smaller subproblems, and results in a time complexity of
 </span>
 <br /><br />
 

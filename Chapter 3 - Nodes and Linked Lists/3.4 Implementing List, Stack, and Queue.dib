@@ -1,3 +1,6 @@
 #!markdown
 
-x
+<span style="font-size:16px;">
+<h1 style="font-family:Copperplate">Implementing List, Stack, and Queue with Linked Lists</h1>
+Here students will recreate the Grocery Store Simulation program from the previous chapter with their own implementations of the data structures.
+</span>

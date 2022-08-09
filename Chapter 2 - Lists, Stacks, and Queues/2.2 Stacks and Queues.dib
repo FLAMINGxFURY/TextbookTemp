@@ -2,30 +2,30 @@
 
 <span style="font-size:16px;">
 <h1 style="font-family:Copperplate">Stacks and Queues</h1>
-<code>Stacks</code> and <code>Queues</code> are similar to <code>Lists</code> in that they can store any number of items, without specifying an initial size. However, <code>Stacks</code> and <code>Queues</code> are <b><i>Constrained Data Structures</i></b>: data entered and retreived from them occurs in a specific order.
+<code>Stacks</code> and <code>Queues</code>, like <code>Lists</code>, can store any number of items without specifying an initial size. Unlike <code>Lists</code>, <code>Stacks</code> and <code>Queues</code> are <b><i>Constrained Data Structures</i></b>: data entered and retrieved from them occurs in a specific order.
 </span>
 
 #!markdown
 
 <span style="font-size:16px;">
 <h4 style="font-family:Copperplate">Stacks</h4>
-Stacks are a "last-in, first-out" (<code>LIFO</code>) data structure. Some things that may come to mind when you hear "stack" are a stack of plates, a stack of books, or a stack of cards. These are all good examples: items are put on "top" of the stack, and can only be removed from the "top".
+Stacks are a "last-in, first-out" (<code>LIFO</code>) data structure. Some examples of "real world" stacks are stacks of plates, books, and playing cards. In each case items are put on "top" of the stack, and can (or should) only be removed from the "top".
 </span>
 
 #!markdown
 
 <span style="font-size:16px;">
 <h4 style="font-family:Copperplate">Stack Operations</h4>
-Stacks have three main operations for manipulating their contents: a <code>push</code> operation, a <code>pop</code> operation, and a <code>peek</code> operation.
+Stacks have three main operations for manipulating their contents: <code>push</code>, <code>pop</code>, and <code>peek</code>.
 <ul>
 <li>
-<code>Push</code> adds an item to the top of the stack.
+<code>Push</code> adds an item to the top of a stack.
 </li>
 <li>
-<code>Pop</code> removes an item from the top of the stack and returns the value.
+<code>Pop</code> removes an item from the top of a stack and returns its value.
 </li>
 <li>
-<code>Peek</code> returns the item at the top of the stack without removing it.
+<code>Peek</code> returns the item at the top of a stack without removing it.
 </li>
 </ul>
 </span>
@@ -34,7 +34,7 @@ Stacks have three main operations for manipulating their contents: a <code>push<
 
 <span style="font-size:16px;">
 <h4 style="font-family:Copperplate">Stacks in C#</h4>
-In C#, stacks can be initialized empty or with a list of items. You can find the C# documentation for stacks <a href="https://docs.microsoft.com/en-us/dotnet/api/system.collections.stack.-ctor?view=net-6.0">here</a>. 
+In C#, stacks can be initialized as an empty structure or with a list of items. You can find the C# documentation for stacks <a href="https://docs.microsoft.com/en-us/dotnet/api/system.collections.stack.-ctor?view=net-6.0">here</a>. 
 
 #!csharp
 
@@ -75,13 +75,13 @@ Console.WriteLine(reversedSentence);
 
 <span style="font-size:16px;">
 <h4 style="font-family:Copperplate">Queues</h4>
-Queues, by contrast, are a "first-in, first-out" (<code>FIFO</code>) data structure. A line at the movie theatre is an example of a queue. Instead of inserting and removing from the "top", we insert items at a queue's "end" and remove them from its "front".
+Queues, by contrast, are a "first-in, first-out" (<code>FIFO</code>) data structure. A line at the movie theatre is an example of a queue. Instead of inserting and removing from the "top", items are inserted at a queue's "end" and removed from its "front".
 
 #!markdown
 
 <span style="font-size:16px;">
 <h4 style="font-family:Copperplate">Queue Operations</h4>
-Queues have three main operations for manipulating their contents: a <code>enqueue</code> operation, a <code>dequeue</code> operation, and a <code>peek</code> operation.
+Queues have three main operations for manipulating their contents: <code>enqueue</code>, <code>dequeue</code>, and <code>peek</code>.
 <ul>
 <li>
 <code>Enqueue</code> adds an item to the back of the queue.
@@ -90,7 +90,7 @@ Queues have three main operations for manipulating their contents: a <code>enque
 <code>Dequeue</code> removes an item from the front of the queue and returns the value.
 </li>
 <li>
-<code>Peek</code> returns the item at the front of the queue without removing it.
+<code>Peek</code> returns the value of the item at the front of the queue without removing it.
 </li>
 </ul>
 </span>
@@ -99,7 +99,7 @@ Queues have three main operations for manipulating their contents: a <code>enque
 
 <span style="font-size:16px;">
 <h4 style="font-family:Copperplate">Queues in C#</h4>
-In C#, queues can be initialized empty or with a list of items. You can find the C# documentation for queues <a href="https://docs.microsoft.com/en-us/dotnet/api/system.collections.queue.-ctor?view=net-6.0">here</a>.
+In C#, queues can be initialized as an empty structure or with a list of items. You can find the C# documentation for queues <a href="https://docs.microsoft.com/en-us/dotnet/api/system.collections.queue.-ctor?view=net-6.0">here</a>.
 </span>
 
 #!csharp
@@ -169,7 +169,9 @@ else {
 
 #!markdown
 
-<span style="font-size:14px;">2. Print the value <kbd>4</kbd> to the screen using the queue from exercise 1. <i>Hint: There are multiple ways to solve this problem. Try a few different methods.</i></span>
+<span style="font-size:14px;">2. Print the value <kbd>4</kbd> to the screen using the queue from exercise 1.
+
+><span style="font-size:14px;"><b>💡Hint:</b> There are multiple ways to solve this problem. Try a few different methods.</span></span>
 
 #!csharp
 

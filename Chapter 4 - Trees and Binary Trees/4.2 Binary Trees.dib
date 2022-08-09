@@ -1,0 +1,3 @@
+#!markdown
+
+Reinforce "constraints". Cover Binary trees, and then use BST to show how insertion (and maybe deletion? Deletion requires search) is easier with these constraints.

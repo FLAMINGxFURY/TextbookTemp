@@ -2,8 +2,12 @@
 
 <span style="font-size:16px;">
 <h1 style="font-family:Copperplate">Arrays</h1>
-<code>Arrays</code> are data structures that store multiple instances of the same type of item: e.g., <code>ints</code>: <kbd>[1, 2, 3]</kbd>, <code>doubles</code>: <kbd>[1.2, 0.144579, 63.0]</kbd>, or <code>strings</code>: <kbd>["Hello", "World!"]</kbd>.
+<code>Arrays</code> are gridlike data structures that store multiple instances of one type of item: e.g., <code>ints</code>: <kbd>[1, 2, 3]</kbd>, <code>doubles</code>: <kbd>[1.2, 0.144579, 63.0]</kbd>, or <code>strings</code>: <kbd>["Hello", "World!"]</kbd>.
 </span>
+
+#!csharp
+
+Console.WriteLine("Bruh\n");
 
 #!markdown
 
@@ -30,7 +34,7 @@ An array’s contents can be initialized by assigning a value to each of its ite
 >```
 
 <span style="font-size:16px;">
-Alternatively, the <code>new</code> keyword allows you to specify an array’s size and initialize its elements to a type-dependent default value. For example, unspecified <code>integers</code> are initialized to 0.
+Alternatively, the <code>new</code> keyword specifies an array’s size and initializes its elements to a type-dependent default value. For example, unspecified <code>integers</code> are initialized to 0.
 </span>
 <br /><br />
 
@@ -57,13 +61,16 @@ double[] arrayOfDoubles = new double[3] {1.2, 0.144579, 63.0};
 char[] arrayOfCharacters = new char[] {'a', 'Z', '.'};
 
 //This prints each array:
-Console.WriteLine($"The array of strings: \t\t[{string.Join(", ", arrayOfStrings)}]\nThe array of integers: \t\t[{string.Join(", ", arrayOfIntegers)}]\nThe array of doubles: \t\t[{string.Join(", ", arrayOfDoubles)}]\nThe array of characters: \t[{string.Join(", ", arrayOfCharacters)}]\n");
+Console.WriteLine($"The array of strings: \t\t[{string.Join(", ", arrayOfStrings)}]\n");
+Console.WriteLine($"The array of integers: \t\t[{string.Join(", ", arrayOfIntegers)}]\n");
+Console.WriteLine($"The array of doubles: \t\t[{string.Join(", ", arrayOfDoubles)}]\n");
+Console.WriteLine($"The array of characters: \t[{string.Join(", ", arrayOfCharacters)}]\n");
 
 #!markdown
 
 <span style="font-size:16px;">
 <h4 style="font-family:Copperplate;margin-bottom:6pt;">Accessing Array Values</h4>
-<code>Array</code> elements are accessed using <i>indexing</i>. Each of an array’s elements is assigned an <i>index</i>: a non-negative integer that references that element's contents. The array's first element is assigned 0 and succeeding elements are assigned indexes in <i>ascending order</i>.<br /><br />
+<code>Array</code> elements are accessed using <i>indexing</i>. Each of an array’s elements is assigned an <i>index</i>: a non-negative integer that references that element's contents. The array's first element is assigned 0 and succeeding elements are assigned integer indexes in <i>ascending order</i>.<br /><br />
 In C#, array elements are accessed using <code>[i]</code> where <kbd>i</kbd> is the index of the element to access. Given the array <kbd><code>SalesPerRegister</code> = [15, 4, 8, 9, 3]</kbd>, the following code will print 8 to the console:</span>
 <br /><br />
 
@@ -83,34 +90,33 @@ Indexing can also be used to alter an array’s elements. The following code cha
 
 <span style="font-size:16px;">
 <h4 style="font-family:Copperplate;margin-bottom:6pt;">Properties and Methods</h4>
-When working with arrays, it’s common to view or edit each value. C#, like most languages, enables you to access array values iteratively, using a loop with an index variable. You can also iterate through an array's elements in ascending order using C#’s <code>foreach</code> loop. Support for operations like this are less common, particularly in older languages like C. Always be sure to have the documentation for the language you are working in handy: for example, you can find C#'s documentation on arrays <a href="https://docs.microsoft.com/en-us/dotnet/api/system.array?view=net-6.0">here</a>.
+When working with arrays, it’s common to view or edit each value. C#, like most languages, enables you to do this using a loop with an index variable. You can also iterate through an array's elements in ascending order using C#’s <code>foreach</code> loop. 
 </span>
 
 #!csharp
 
 int[] SalesPerRegister = {15, 4, 8, 9, 3};
 
-//print 8
+//Print 8
 Console.WriteLine($"Original Value: {SalesPerRegister[2]}");
 
-//There was a new sale on register 3! Let's increment that value.
+//Register 3 just recorded a sale! Let's increment that value.
 SalesPerRegister[2]++;
 
-//print the new value
+//Print the new value
 Console.WriteLine($"Altered Value: {SalesPerRegister[2]}"); 
 
-//let's explore some builtin properties and methods
-
+//Let's explore some builtin properties and methods
 Console.WriteLine("The Array:");
 
-//this is a loop to print the array
+//Tthis is a loop to print the array
 for(int i = 0; i < SalesPerRegister.Length; i++) {
     Console.Write($"{SalesPerRegister[i]} ");
 }
 
 Console.WriteLine("\nThe Array with foreach:");
 
-//this is a loop to print the array
+//This is also a loop to print the array
 foreach (int x in SalesPerRegister) {
     Console.Write($"{x} ");
 }
@@ -124,7 +130,7 @@ for(int i = 0; i < SalesPerRegister.Length; i++) {
     Console.Write($"{SalesPerRegister[i]} ");
 }
 
-//Find the Index of a value
+//Find a value's first index
 Console.Write("\n");
 Console.WriteLine($"The Index of 4: {Array.IndexOf(SalesPerRegister, 4)}");
 
@@ -140,8 +146,14 @@ for(int i = 0; i < SalesPerRegister.Length; i++) {
 #!markdown
 
 <span style="font-size:16px;">
+Support for operations like <code>foreach</code> are less common, particularly in older languages like C. Always be sure to have your language's documentation handy: for example, C#'s documentation on arrays is <a href="https://docs.microsoft.com/en-us/dotnet/api/system.array?view=net-6.0">here</a>.
+</span>
+
+#!markdown
+
+<span style="font-size:16px;">
 <h4 style="font-family:Copperplate">Arrays in Memory</h4>
-<code>Arrays</code> are stored in memory in a contiguous block. The array variable is a reference type, meaning the variable stores a memory address that locates the first value in the array. Array <code>indexes</code> indicate how many objects to look ahead of that address; that is why <kbd>array[0]</kbd> accesses the first element - we are adding 0 to the address. <br />
+<code>Arrays</code> are stored in memory in a contiguous block. The array variable is a reference type: it stores a memory address that locates the array's first value. Array <code>indexes</code> indicate how many objects to look ahead of that address; that is why <kbd>array[0]</kbd> accesses the first element - we are adding 0 to the address. <br />
 
 <img src="https://raw.githubusercontent.com/FLAMINGxFURY/TextbookTemp/main/Chapter%201%20-%20Array%20and%20Array%20Algorithms/Assets/ArraysInMemory.jpg" style="width:90%;"/><br />
 <a href="https://beginnersbook.com/2018/10/data-structure-array/" style="font-size:11px;">Source: BeginnersBook.com</a>

@@ -1,0 +1,351 @@
+#!markdown
+
+<span style="font-size:16px;">
+<h1 style="font-family:Copperplate">Linked List Variants</h1>
+As shown in Section 3.2, using references to organize linked lists allows them to be built incrementally, with storage from different sections of memory. This capability addresses one of the potential disadvantages of contiguous lists: i.e., the need to move them in memory as they change size, in order to ensure that they fit into a single block of storage as they add items, or possibly to eliminate wasted space as they lose them.<br/><br/>
+This use of references to organize linked lists, however, comes at a cost. Due to the absence of indices, algorithms that traverse linked lists are limited to moving along whatever paths a list’s references provide. In the case of a singly linked list, it is not possible to work backwards from a node in order to find its processor: a complication that <code>remove()</code> addresses through the use of two reference variables and some complicated logic.
+This section shows how adding references to singly linked lists can improve the efficiency of certain types of traversals.  It covers two variants of singly linked lists: <i>doubly-linked lists</i> and <i>circular linked lists</i>.
+
+</span>
+
+#!markdown
+
+<span style="font-size:16px;">
+<h4 style="font-family:Copperplate">Doubly-Linked Lists</h4>
+<i>Doubly-linked lists</i> allow procedures to traverse lists in both directions. To implement a doubly-linked list, the <code>Node</code> class from Section 3.2 can be expanded to include a <code>prev</code> attribute:
+</span>
+
+#!csharp
+
+//This Node holds an integer, a reference to the previous node and a reference to the next node
+public class Node {
+    public int data;
+    public Node prev;
+    public Node next;
+    
+    //Constructor
+    public Node(int data) {
+        this.data = data;
+        this.prev = null;
+        this.next = null;
+    }
+}
+
+#!markdown
+
+<span style="font-size:16px;">
+This new attribute enables lists to be traversed in reverse. To exploit it, the earlier implementation of singly-linked lists must be updated to maintain these reverse links. 
+</span>
+
+#!csharp
+
+//This is a doubly-linked list of integers
+public class DoublyLinkedList {
+    public Node head;
+    public Node tail;
+    
+    //Constructor
+    public DoublyLinkedList() {
+        this.head = null;
+        this.tail = null;
+    }
+    
+    //Adds a node to the end of the list
+    public void add(int data) {
+        //Creat a new node from the data
+        Node newNode = new Node(data);
+
+        //If the list is empty, set the head to the new node
+        if(this.head == null) {
+            this.head = newNode;
+        }
+        //Else, if the tail is null, set the new node as the tail
+        else if(this.tail == null) {
+            this.tail = newNode;
+            this.head.next = this.tail;
+            this.tail.prev = this.head;
+        }
+        //Else, set next for the tail to the new node and then set tail to the new node.
+        //Also set prev for the new node to the old tail.
+        else {
+            this.tail.next = newNode;
+            newNode.prev = this.tail;
+            this.tail = newNode;
+        }
+    }
+    
+    //This method removes a node with given data
+    public void remove(int data) {
+        //If the list is empty, return
+        if(this.head == null) {
+            return;
+        }
+        //If the head has the data, set the head to the next node
+        if(this.head.data == data) {
+            this.head = this.head.next;
+        }
+        //If the tail has the data, set the tail to the previous node
+        else if(this.tail.data == data) {
+            this.tail = this.tail.prev;
+        }
+        //Else, find the node with the data and set the previous node's next to the next node
+        else {
+            Node current = this.head;
+            while(current != null) {
+                //If the current node has the data, set the previous node's next to the next node
+                //and the next node's prev to the previous node
+                if(current.data == data) {
+                    current.prev.next = current.next;
+                    current.next.prev = current.prev;
+                    break;
+                }
+                current = current.next;
+            }
+        }
+    }
+
+    //This method removes the first node in the list
+    public void removeFirst() {
+        //If the list is empty, return
+        if(this.head == null) {
+            return;
+        }
+        //If the list has only one node, set the head to null
+        else if(this.head.next == null) {
+            this.head = null;
+        }
+        //Else, set the head to the next node
+        else {
+            this.head = this.head.next;
+            this.head.prev = null;
+        }
+    }
+
+    //Doubly linked lists allow us to remove the last element in O(1) time
+    //This method removes the last node in the list
+    public void removeLast() {
+        //If the list is empty, return
+        if(this.head == null) {
+            return;
+        }
+        //If the list has only one node, set the head to null
+        else if(this.head.next == null) {
+            this.head = null;
+        }
+        //Else, set the tail to the previous node
+        else {
+            this.tail = this.tail.prev;
+            this.tail.next = null;
+        }
+    }
+}
+
+#!markdown
+
+<span style="font-size:16px;">
+Note that doubly linked lists allow for removal of the last element in <kbd>O(1)</kbd> time, whereas it would be <kbd>O(n)</kbd> time for singly linked lists.
+</span>
+
+#!markdown
+
+<span style="font-size:16px;">
+The code block below contains a doubly linked list to start with. Again, consider some additional methods for this class. What could this be used for?
+
+#!csharp
+
+DoublyLinkedList list = new DoublyLinkedList();
+list.add(64);
+list.add(71);
+list.add(12);
+list.add(101);
+list.add(9);
+
+#!markdown
+
+<span style="font-size:16px;">
+<h4 style="font-family:Copperplate">Circular Linked Lists</h4>
+A <i>circular linked list</i> is a linked list whose last node references its first node. In other words, the <code>tail.next</code> attribute points to the <code>head</code> node. The methods for this class will look similar to the methods for singly-linked lists, but they will need to ensure that the <code>tail</code> node points to the <code>head</code> node.
+</span>
+
+#!csharp
+
+//This is a circular singly-linked list of integers
+public class CircularLinkedList {
+    public Node head;
+    public Node tail;
+
+    //Constructor
+    public CircularLinkedList() {
+        this.head = null;
+        this.tail = null;
+    }
+
+    //Adds a node to the list
+    public void add(int data) {
+        //Creat a new node from the data
+        Node newNode = new Node(data);
+
+        //If the list is empty, set the head to the new node
+        if(this.head == null) {
+            this.head = newNode;
+            this.head.next = this.head;
+        }
+        //Else, if the tail is null, set the new node as the tail
+        else if(this.tail == null) {
+            this.tail = newNode;
+            this.head.next = this.tail;
+            this.tail.next = this.head;
+        }
+        //Else, set next for the tail to the new node and then set tail to the new node.
+        //Also set next for the new node to head.
+        else {
+            this.tail.next = newNode;
+            newNode.next = this.head;
+            this.tail = newNode;
+        }
+    }
+
+    //Removes a node with given data
+    public void remove(int data) {
+        //If the list is empty, return
+        if(this.head == null) {
+            return;
+        }
+        //Else, if the head has the data, set the head to the next node
+        //and set next for the tail to the new head
+        else if(this.head.data == data) {
+            this.head = this.head.next;
+            this.tail.next = this.head;
+        }
+        //Else, traverse the list and check to see if the node to be removed is in the list
+        else {
+            Node current = this.head;
+            do { //If we fall out of this while loop, there is no node with the given data
+                if(current.next.data == data) {
+                    current.next = current.next.next; //Set the next node for the node before the node to be removed to the node after the node to be removed
+                    return;
+                }
+                current = current.next;
+            } while(current.next != null && current.next != this.head); //The second condition ensures only one pass through the list
+        }
+    }
+
+    //This method removes the head
+    public void removeHead() {
+        //If the list is empty, return
+        if(this.head == null) {
+            return;
+        }
+        //If the list has only one node, set the head to null
+        else if(this.head.next == null) {
+            this.head = null;
+        }
+        //Else, set the head to the next node
+        else {
+            this.head = this.head.next;
+            this.tail.next = this.head;
+        }
+    }
+
+    //This method removes the tail
+    public void removeTail() {
+        //If the list is empty, return
+        if(this.head == null) {
+            return;
+        }
+        //If the list has only one node, set the head to null
+        else if(this.head.next == null) {
+            this.head = null;
+        }
+        //Else, set the tail to the previous node
+        else {
+            Node current = this.head;
+            while(current.next != this.tail) {
+                current = current.next;
+            }
+            this.tail = current;
+            this.tail.next = this.head;
+        }
+    }
+}
+
+#!markdown
+
+<span style="font-size:16px;">
+Take particular note of the measures being taken to avoid an infinite loop: the use of do-while loops ensures the head is considered but not passed again. Other than that, a circular linked list is similar to a singly linked list with the added constraint that the tail must reference the head.
+</span>
+
+#!markdown
+
+<span style="font-size:16px;">
+Below is a circular linked list to test this implementation. What special cases could we use this type of list for? What methods would support those use cases? Make some methods of your own and test them below.<br /><br />
+
+>💡**Challenge:** Implement a <code>sort()</code> method for this class. 
+
+</span>
+
+#!csharp
+
+CircularLinkedList list = new CircularLinkedList();
+list.add(64);
+list.add(71);
+list.add(12);
+list.add(101);
+list.add(9);
+
+#!markdown
+
+<hr /><span style="font-size:14px;">
+<b style="font-size:16px;">Exercises</b> &emsp;|&emsp; <i>Place your answers in a <b>new</b> markdown cell below.</i>
+<ol>
+<li> In a <i>doubly-linked list</i>, why is it possible to remove the last element in <kbd>O(1)</kbd> time?<br /><br /></li>
+<li> Explain the purpose of the following loop.
+
+```csharp
+do {
+    //...
+} while (currentNode != circularLinkedList.head);
+```
+
+</li> 
+<li> Explain what the following function accomplishes.
+
+```csharp
+function() {
+    if(this.head == null) {
+        return;
+    }
+    else if(this.head.data == data) {
+        this.head = this.head.next; 
+    }
+    else {
+        Node current = this.head;
+        while(current.next != null) { 
+            if(current.next.data == data) {
+                current.next = current.next.next; 
+                return;
+            }
+            current = current.next;
+        }
+    }
+}
+```
+
+</li> 
+<li> What is the time complexity of the function from exercise 3? Why?<br /><br />
+</li> 
+</span>
+
+#!markdown
+
+<span style="font-size:15px;">
+
+>💡**Challenge:** In the following <code>code</code> cell, create a doubly-linked circular list.
+
+</span>
+
+#!csharp
+
+public class DLCircularLinkedList {
+    
+}

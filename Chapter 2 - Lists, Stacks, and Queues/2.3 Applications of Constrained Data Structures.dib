@@ -2,8 +2,10 @@
 
 <span style="font-size:16px;">
 <h1 style="font-family:Copperplate">Applications of Constrained Data Structures</h1>
-Stacks and queues are the same as lists, as far as memory is concerned. They fill a contiguous block of memory. This means that lists can be used for the same purpose as a stack or a queue. So why do we use them?<br /> <br >
-Constraints on data structures communicate how a program is processing its data. Using a stack clarifies that this data is being processed in a LIFO (last in, first out) fashion. Similarly, when a programmer sees a queue being used, they understand that the data is being processed in a FIFO (first in, first out) fashion. In other words, using these structures <b><i>clarifies the intent</i></b> of the programmer and provides a <b><i>common understanding</i></b> for others that will work with the code later.<br /><br />
+Stacks and queues are examples of <i>constrained data types</i>: data types that are derived from parent data types by limiting how those parent types can be accessed and manipulated. Stacks and queues are essentially constrained versions of lists that severely limit the locations at which their users can add, access, and remove values from a list.<br/> <br/>
+Strictly speaking, programming languages don’t need to provide constrained data types, so long as they provide the parent types from which the constrained types are derived. For example, in the case of stacks and queues, lists can be made to function like LIFOs and FIFOs, respectively. Stacks and queues, in fact, are often implemented as lists.<br/><br/>
+What constrained data types do provide is an extra measure of clarity and safety in a code’s implementation. Constraints on data structures communicate how a program is processing its data. Using a stack clarifies that this data is being processed in a LIFO (last in, first out) fashion. Similarly, queues clarify that data is being processed in a FIFO (first in, first out) fashion. In other words, using these structures <b><i>clarifies a programmer’s intent</i></b>. This provides a <b><i>common understanding</i></b> for others that will work with the code later.<br/><br/>
+Constraints on data structures can also help to prevent coding errors. For example, when using a list to simulate a queue, the code that dequeues an item from the simulated queue must compute the index of that list’s last item. Again, when using a list to simulate a stack, the code that pushes an item onto the simulated stack must shift all of the list’s elements to right, in order to make room to hold the item. Parameterless primitives like <code>dequeue</code> and <code>push</code> streamline the logic programmers must write and eliminate the need to track indices: a potential source of programmer error.<br/><br/>
 Below are some examples of how these stacks and queues can be used.
 </span>
 
@@ -11,7 +13,7 @@ Below are some examples of how these stacks and queues can be used.
 
 <span style="font-size:16px;">
 <h4 style="font-family:Copperplate">Detecting Syntax Errors With Stacks</h4>
-When we write code, we structure it with a variety of braces and parentheses. We can use stacks to detect incorrect use of these symbols.
+In C#, code is structured with a variety of braces and parentheses. Stacks can be used to detect the incorrect use of these symbols.
 </span>
 
 #!csharp
@@ -46,8 +48,7 @@ bool IsValid(string code) {
                     return false;
                 }
             }
-            //If the stack is empty, this means that there is no opening bracket.
-            //Therefore, the string is invalid.
+            //If the stack is empty, this closing bracket lacks an opening bracket.
             else return false;
         }
     }
@@ -79,7 +80,7 @@ Console.WriteLine($"String 3 is {(IsValid(example3) ? "" : "not ")}valid.");
 #!markdown
 
 <span style="font-size:16px;">
-In the example above, the use of a stack provides clarity about the intent of the original programmer: opening braces are added to the stack, and the topmost character is used to verify a closing brace when it is encountered.<br /><br />
+In the example above, the use of a stack helps to clarify the original programmer's intent: opening braces are added to the stack, and the topmost character is used to verify a closing brace when it is encountered.<br /><br />
 Another thing to note about stacks and queues is that, typically, the data they store is temporary. In the example above, the stack only holds a few characters which are regularly discarded.
 </span>
 
@@ -87,7 +88,7 @@ Another thing to note about stacks and queues is that, typically, the data they 
 
 <span style="font-size:16px;">
 <h4 style="font-family:Copperplate">Using a Queue to Hold Print Jobs</h4>
-Queues support FIFO processing, which has different use cases. This next example demonstrates the use of a queue to temporarily hold print jobs until they are completed.
+Queues support FIFO processing, which has different use cases. This next example demonstrates the use of a queue to temporarily hold print jobs until they complete.
 </span>
 
 #!csharp

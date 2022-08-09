@@ -25,16 +25,21 @@ In C#, multidimensional arrays are declared using a comma (<code>,</code>) in th
 
 >```csharp
 >int[,] arrInts2D;
+>int[,,] arrints3D;
 >```
 
 <span style="font-size:16px;">
 <h4 style="font-family:Copperplate;margin-bottom:6pt;">Initializing Multidimensional Arrays</h4>
-When initializing multidimensional arrays, you must be cognizant of the size of the subarrays. <b>Each dimension must be filled with a value.</b> For example, the following code will throw an error:
+When initializing multidimensional arrays, <b>each dimension of each subarray must be filled with a value.</b> For example, the following code will throw an error:
 </span>
 
 #!csharp
 
 int[,] arrInts2D = {{1, 2}, {3, 4, 5}};
+
+#!csharp
+
+int[,,] arrInts3D = {{{1, 2}, {3, 4, 5}},{{6,7,8}, {9, 10, 11}}};
 
 #!markdown
 
@@ -43,62 +48,81 @@ This code is correct:</span>
 <br /><br />
 
 >```csharp
->int[,] arrInts2D = {{1, 2, 0}, {3, 4, 5}};
+>int[,] arrInts2D = {{0, 1, 2}, {3, 4, 5}};
+>int[,,] arrInts3D = {{{0, 1, 2}, {3, 4, 5}}, {{6,7,8}, {9, 10, 11}}};
 >```
 
 <span style="font-size:16px;">
-You can also use the <code>new</code> keyword. To do so, you must use a comma (<code>,</code>) to separate the dimensions of the new array:</span>
+The <code>new</code> keyword can be used to specify the shape of multidimensional arrays. To do so, use a comma (<code>,</code>) to separate the array's dimensions:</span>
 <br /><br />
 
 >```csharp
 >int[,] arrInts2D = new int[2,3];
+>int[,] arrInts3D = new int[2,3,2];
 >```
 
 #!markdown
 
 <span style="font-size:16px;">
 <h4 style="font-family:Copperplate;margin-bottom:6pt;">Accessing Values in Multidimensional Arrays</h4>
-Values in multidimensional arrays are indexed by dimension. A 2-dimensional array will have 2 indices for each value; a 5-dimensional array will have 5 indices for each value. Consider the following 3-Dimensional array:<br />
-[
+Values in multidimensional arrays are indexed by dimension. For example, a 2-dimensional array will have 2 indices for each value, while a 5-dimensional array will have 5 indices for each value. Indices in index expressions are ordered from left to right, in descending order of dimension.  For example, in a three-dimensional array, an element’s plane is shown first, followed by its row, and, finally, its column.</br></br>Consider the following 3-Dimensional array:<br /><br />
 <table>
 <tbody>
   <tr>
-    <td>5</td>
-    <td>4</td>
-    <td>3</td>
-  </tr>
-  <tr>
-    <td>2</td>
-    <td>1</td>
-    <td>8</td>
-  </tr>
-  <tr>
-    <td>6</td>
-    <td style="background-color:rgba(255,255,255,0.1)"><code>0</code></td>
-    <td>7</td>
+    <td style="border:0px;vertical-align:top;">[</td>
+    <td style="border:0px;">
+      <table>
+      <tbody>
+        <tr>
+          <td>5</td>
+          <td>4</td>
+          <td>3</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>1</td>
+          <td>8</td>
+          <td>7</td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td style="background-color:rgba(255,255,255,0.1)"><code>0</code></td>
+          <td>7</td>
+          <td>8</td>
+        </tr>
+      </tbody>
+      </table>
+    </td>
+    <td style="border:0px;vertical-align:center;">,</td>
+    <td style="border:0px;">
+      <table>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>4</td>
+          <td>7</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <td>8</td>
+          <td>2</td>
+          <td>5</td>
+          <td>3</td>
+        </tr>
+        <tr>
+          <td>9</td>
+          <td>3</td>
+          <td>6</td>
+          <td>4</td>
+        </tr>
+      </tbody>
+      </table>
+    </td>
+    <td style="border:0px;vertical-align:bottom;">]</td>
   </tr>
 </tbody>
-</table>,<br /><br />
-<table>
-<tbody>
-  <tr>
-    <td>1</td>
-    <td>4</td>
-    <td>7</td>
-  </tr>
-  <tr>
-    <td>8</td>
-    <td>2</td>
-    <td>5</td>
-  </tr>
-  <tr>
-    <td>9</td>
-    <td>3</td>
-    <td>6</td>
-  </tr>
-</tbody>
-</table>
-]<br />
+</table><br />
 The following code will access the highlighted zero:</span>
 <br /><br />
 
@@ -116,47 +140,43 @@ The following code will access the highlighted zero:</span>
 
 <span style="font-size:16px;">
 <h4 style="font-family:Copperplate;margin-bottom:6pt;">Properties and Methods for Multidimensional Arrays</h4>
-Multidimensional arrays share functions with the base Array class. Many functions act as if the array is one-dimensional. For example, the <code>Length</code> property returns the total number of values in the entire array.
-Some Array methods are specific to multidimensional arrays. A couple C# examples are <code>GetLength()</code> and the <code>Rank</code> property. Be sure to reference the <a href="https://docs.microsoft.com/en-us/dotnet/api/system.array?view=net-6.0">documentation</a> for the language you are working with.
+Multidimensional arrays share functions with the base Array class. For simplicity, many functions treat all arrays as one-dimensional objects. For example, the <code>Length</code> property returns the total number of values in the entire array.</br></br>
+Some Array methods are specific to multidimensional arrays. A couple C# examples are <code>GetLength()</code> and the <code>Rank</code> property. Be sure to reference the <a href="https://docs.microsoft.com/en-us/dotnet/api/system.array?view=net-6.0">documentation</a> for the language you are using.
+
 </span>
-
-#!markdown
-
-<span style="color:red;font-weight:bold;">Redo this example.</span>
 
 #!csharp
 
 // The following code produces a 2x2 grid representing a chess board
-char[,] chess = new char[8,8];
+int numRows = 8;
+int numCols = 8;
+char[,] chess = new char[numRows, numCols];
+
+char[] backRowChessPieces = {'R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R'};
 
 // In normal arrays, we use the Length property for iteration.
 // Multidimensional arrays have a funtion GetLength(x) where x is the dimension: 
 // in this case, GetLength(0) gives us the y axis, and GetLength(1) gives us the x axis.
 
-for(int i = 0; i < chess.GetLength(0); i++) {       //for each row in the board
+for(int thisRow= 0; thisRow < chess.GetLength(0); thisRow++) {       //for each row in the board
     //case 1: we are in a piece row
-    if(i == 0 || i == 7) {
-        chess[i,0] = 'R';
-        chess[i,1] = 'N';
-        chess[i,2] = 'B';
-        chess[i,3] = 'Q';
-        chess[i,4] = 'K';
-        chess[i,5] = 'B';
-        chess[i,6] = 'N';
-        chess[i,7] = 'R';
+    if(thisRow == 0 || thisRow == chess.GetLength(0) - 1) {
+        for(int thisCol = 0; thisCol < chess.GetLength(1); thisCol++) {
+            chess[thisRow, thisCol] = backRowChessPieces[thisCol];
+        }
     }
     
     //case 2: we are in a pawn row
-    else if(i == 1 || i == 6){
-        for (int j = 0; j < chess.GetLength(1); j++){   //for each column in the row
-            chess[i,j] = 'p';
+    else if(thisRow == 1 || thisRow == chess.GetLength(0) - 2) {
+        for(int thisCol = 0; thisCol < chess.GetLength(1); thisCol++) {
+            chess[thisRow, thisCol] = 'p';
         }
     }
 
     //case 3: we are in an empty row
     else {
-        for (int j = 0; j < chess.GetLength(1); j++){   //for each column in the row
-            chess[i,j] = '.';
+        for(int thisCol = 0; thisCol < chess.GetLength(1); thisCol++) {
+            chess[thisRow, thisCol] = '.';
         }
     }
 }
@@ -171,9 +191,21 @@ for(int i = 0; i < chess.GetLength(0); i++) {       //for each row in the board
 
 #!markdown
 
+<span style="font-size:15px;">
+
+>💡**Challenge:** In the following <code>code</code> cell, show a chessboard from black's perspective. It may help to use the <code>chess</code> array or the <code>backRowChessPieces</code> array.
+
+</span>
+
+#!csharp
+
+// Hint: From black's perspective, the queen will be on the right of the king.
+
+#!markdown
+
 <span style="font-size:16px;">
 <h4 style="font-family:Copperplate;margin-bottom:6pt;">Jagged Arrays</h4>
-<code>Jagged Arrays</code> are arrays of multiple dimension that can have irregular size. In the following example, you can see that each row in the array has a different size:
+<code>Jagged Arrays</code> are multi-dimensional arrays whose dimensions contain different numbers of elements. The following example shows a jagged array with four rows, each of which has a different size:
 <br />
 
 <img src="https://raw.githubusercontent.com/FLAMINGxFURY/TextbookTemp/main/Chapter%201%20-%20Array%20and%20Array%20Algorithms/Assets/JagArr.jpg" style="width:90%;" /><br /><a href="https://www.geeksforgeeks.org/jagged-array-or-array-of-arrays-in-c-with-examples/" style="font-size:11px;">Source: GeeksForGeeks</a>
@@ -182,9 +214,9 @@ for(int i = 0; i < chess.GetLength(0); i++) {       //for each row in the board
 #!markdown
 
 <span style="font-size:16px;">
-When using Jagged Arrays, it may help to think of them as arrays of arrays.<br />
+It may help to think of jagged arrays as arrays of arrays.<br />
 <h4 style="font-family:Copperplate;margin-bottom:6pt;">Declaring Jagged Arrays</h4>
-Jagged Arrays are declared by sequencing sets of <code>[]</code>:</span>
+Jagged arrays are declared using sequences of <code>[]</code> operators, one per dimension, like so:</span>
 <br /><br />
 
 >```csharp
@@ -193,7 +225,7 @@ Jagged Arrays are declared by sequencing sets of <code>[]</code>:</span>
 
 <span style="font-size:16px;">
 <h4 style="font-family:Copperplate;margin-bottom:6pt;">Initializing Jagged Arrays</h4>
-Jagged arrays can be initialized in steps (and must be to achieve a jagged shape.) The following code mimics the shape of the diagram above: </span>
+Jagged arrays can be initialized in steps - and must be to achieve a jagged shape. The following code mimics the shape of the diagram above: </span>
 
 #!csharp
 
@@ -210,7 +242,7 @@ jagInts2D
 #!markdown
 
 <span style="font-size:16px;">
-Jagged arrays must be initialized with the <code>new</code> keyword. However, the array's deepest layer may be initialized with <code>{}</code>. For example, the above example can be rewritten as:</span>
+Jagged arrays must be initialized with the <code>new</code> keyword. However, an array's deepest layer may be initialized with <code>{}</code>. For example, the above example can be rewritten as follows:</span>
 
 #!csharp
 
@@ -332,12 +364,14 @@ for(int i = 0; i < jaggedMD.Length; i++) {   //for each plane
 
 #!markdown
 
-<span style="font-size:14px;">2. Print the value <kbd>3</kbd> to the screen.</span>
+<span style="font-size:14px;">2. Using the array created in exercise 1, print the value <kbd>3</kbd> to the screen.</span>
 
 #!csharp
 
 // Exercise 2
-// Hint: as long as you run the above cell first, you don't have to redeclare the array.
+// Hint: The array from exercise 1 will stay in memory until the notebook is closed.
+// You should be able to use it here without redeclaring it, as long as you have 
+// run the cell from exercise 1 first.
 
 #!markdown
 
@@ -373,7 +407,7 @@ for(int i = 0; i < jaggedMD.Length; i++) {   //for each plane
 
 #!markdown
 
-<span style="font-size:14px;">7. Create a Jagged Array with 6 rows.</span>
+<span style="font-size:14px;">7. Create a jagged array with 6 rows.</span>
 
 #!csharp
 
@@ -381,7 +415,7 @@ for(int i = 0; i < jaggedMD.Length; i++) {   //for each plane
 
 #!markdown
 
-<span style="font-size:14px;">8. Using the array from exercise 1, initialize the sizes of the jagged array to the Fibonacci Sequence, and then print the array.</span>
+<span style="font-size:14px;">8. Using a fresh copy of the array from exercise 1, set the sizes of the jagged array's rows to the Fibonacci Sequence: for example, this array’s first and last rows should have 1 and 8 elements, respectively. Fill each row to capacity with the initial values of the Fibonacci sequence: for example, this array’s third row should have {1, 1, 2} as its elements, while its fifth should have {1, 1, 2, 3. 5}. Finally, then print the array.</span>
 
 #!csharp
 

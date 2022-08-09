@@ -8,6 +8,84 @@ A reference type variable stores the integer memory address of the location of i
 #!markdown
 
 <span style="font-size:16px;">
-<h4 style="font-family:Copperplate">Arrays of Objects</h4>
+<h4 style="font-family:Copperplate">Collections of Reference Types</h4>
+The following image depicts an array of strings: <br /><br />
+<img src="https://raw.githubusercontent.com/FLAMINGxFURY/TextbookTemp/main/Chapter%203%20-%20Nodes%20and%20Linked%20Lists/Assets/Array%20of%20Strings.png" style="background-color:rgba(255,255,255,0.5);">
+<br /><a href="https://overiq.com/c-programming-101/array-of-pointers-to-strings-in-c/" style="font-size:11px;">Source: OverIQ.com</a><br />
+The array's memory address provides access to the string addresses, which in turn provide access to each of the array's strings. Chained references like this are the basis for <code>Nodes</code>.
 
+#!markdown
+
+<span style="font-size:16px;">
+<h4 style="font-family:Copperplate">Nodes</h4>
+Nodes are a data structure that contain two things:
+<ul>
+<li>Data stored in the node, whether that be a value type (like an <code>integer</code>) or a memory reference.</li>
+<li>A reference to at least one other node.</li>
+</ul>
+Below is an example of a node with only one reference:
+</span>
+
+#!csharp
+
+//This Node holds an integer and a reference to the next node
+public class Node {
+    public int data;
+    public Node next;
+    
+    //Constructor
+    public Node(int data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+
+#!csharp
+
+// Here are some nodes to use for testing
+Node n1 = new Node(1);
+Node n2 = new Node(2);
+Node n3 = new Node(3);
+
+//Let's put them together.
+n1.next = n2;
+n2.next = n3;
+
+//Here is a simple loop to print out the each node's data
+Node current = n1;
+while (current != null) {
+    Console.WriteLine(current.data);
+    current = current.next;
+}
+
+#!markdown
+
+<span style="font-size:16px;">
+Think about the following questions, and then revisit the code above:
+<ul>
+<li>What other ways could you put the nodes together?</li>
+<li>How could you create an infinite loop with the above nodes?</li> 
+<li>Can you imitate other data structures with nodes? How so?</li>
+<li>How can you expand the functionality of nodes with more references?</li>
+</ul>
+</span>
+
+#!markdown
+
+<hr /><span style="font-size:14px;">
+<b style="font-size:16px;">Exercises</b> &emsp;|&emsp; <i>Place your answers in a <b>new</b> markdown cell below.</i>
+<ol>
+<li> What is a reference type variable?<br /><br /></li>
+<li> What is held in <code>Node.data?</code><br /><br /></li>
+<li> What is held in <code>Node.next?</code><br /><br /></li> 
+
+<li> What does the following loop accomplish?
+
+```csharp
+while (currentNode != null) {
+    //...
+}
+```
+
+</li>
 </span>

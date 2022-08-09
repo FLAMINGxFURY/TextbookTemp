@@ -1,0 +1,363 @@
+#!markdown
+
+<span style="font-size:16px;">
+<h1 style="font-family:Copperplate">Linked Lists</h1>
+<code>Linked Lists</code> are node-based data structures that store data in sequence, similarly to lists. Unlike lists, they can store data in non-contiguous blocks of memory. This means that a linked list can never outgrow its space (unless you run out of memory completely.)<br/><br/>
+The following example demonstrates how to create a linked list from Node class objects.
+
+</span>
+
+#!csharp
+
+//This Node holds an integer and a reference to the next node
+public class Node {
+    public int data;
+    public Node next;
+    
+    //Constructor
+    public Node(int data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+
+#!csharp
+
+//This is a linked list of integers
+public class LinkedList {
+    public Node head;
+    
+    //Constructor
+    public LinkedList() {
+        this.head = null;
+    }
+    
+    //This method adds a node to the end of the list
+    public void add(int data) {
+        //Creat a new node from the data
+        Node newNode = new Node(data);
+
+        //If the list is empty, set the head to the new node
+        if(this.head == null) {
+            this.head = newNode;
+        }
+        
+        //If the list is not empty, traverse to the end of the list
+        else {
+            Node current = this.head;
+            while(current.next != null) {
+                current = current.next;
+            }
+            current.next = newNode;
+        }
+    }
+}
+
+#!markdown
+
+<span style="font-size:16px;">
+We call this a <i>singly-linked list</i>, because each node contains only one reference: the next node in the list. Therefore, we can only traverse the list from beginning to end.<br /><br />
+This first version of a linked list class takes <kbd>O(n)</kbd> operations for insertion. According to <a href="https://www.bigocheatsheet.com/">Big O Cheat Sheet</a> the average time complexity for insertion into linked lists should be <kbd>O(1)</kbd>. This cost of insertion can be improved in one of two ways:
+<ul>
+<li>By inserting nodes at the beginning of the list instead of the end, setting new nodes to be the head of the list.</li>
+<li>By holding a reference to the last node in the list as well, and insert from there.</li>
+</ul>
+The code below updates the initial Linked List code to provide both methods.
+
+</span>
+
+#!csharp
+
+//This is a linked list of integers
+public class LinkedList {
+    public Node head;
+    public Node tail;
+    
+    //Constructor
+    public LinkedList() {
+        this.head = null;
+        this.tail = null;
+    }
+    
+    //This method adds a node to the end of the list
+    public void add(int data) {
+        //Creat a new node from the data
+        Node newNode = new Node(data);
+
+        //If the list is empty, set the head to the new node
+        if(this.head == null) {
+            this.head = newNode;
+        }
+        //Else, if the tail is null, set the new node as the tail and set tail as the 
+        //next node for head
+        else if(this.tail == null) {
+            this.tail = newNode;
+            this.head.next = this.tail;
+        }
+        //Else, set next for the tail to the new node and then set tail to the new node
+        else {
+            this.tail.next = newNode;
+            this.tail = newNode;
+        }
+    }
+
+    //This method adds a node to the beginning of the list
+    public void addFirst(int data) {
+        //Creat a new node from the data
+        Node newNode = new Node(data);
+
+        //If the list is empty, set the head to the new node
+        if(this.head == null) {
+            this.head = newNode;
+        }
+        //Else, set the new node as the head and set the next node for the new node to the head
+        else {
+            newNode.next = this.head;
+            this.head = newNode;
+        }
+    }
+}
+
+#!markdown
+
+<span style="font-size:16px;">
+This second version of LinkedList changes the <code>add()</code> method to use the <code>tail</code> reference. <code>addFirst()</code> only uses the <code>head</code> reference to insert an item at the beginning.<br /><br />
+Removing items is a bit trickier, due to the need to update the reference to the item to remove. For a singly linked list, this could either entail removing a list’s head (like <code>addFirst()</code>) or traversing to the end of the list and removing the last node (like the original <code>add()</code>).<br /><br />
+
+>💡**Tip:** you can collapse the methods we have already covered using the arrows on the lefthand side of the code block.
+
+</span>
+
+#!csharp
+
+//This is a linked list of integers
+public class LinkedList {
+    public Node head;
+    public Node tail;
+    
+    //Constructor
+    public LinkedList() {
+        this.head = null;
+        this.tail = null;
+    }
+    
+    //This method adds a node to the end of the list
+    public void add(int data) {
+        //Creat a new node from the data
+        Node newNode = new Node(data);
+
+        //If the list is empty, set the head to the new node
+        if(this.head == null) {
+            this.head = newNode;
+        }
+        //Else, if the tail is null, set the new node as the tail and set tail as the 
+        //next node for head
+        else if(this.tail == null) {
+            this.tail = newNode;
+            this.head.next = this.tail;
+        }
+        //Else, set next for the tail to the new node and then set tail to the new node
+        else {
+            this.tail.next = newNode;
+            this.tail = newNode;
+        }
+    }
+
+    //This method adds a node to the beginning of the list
+    public void addFirst(int data) {
+        //Creat a new node from the data
+        Node newNode = new Node(data);
+
+        //If the list is empty, set the head to the new node
+        if(this.head == null) {
+            this.head = newNode;
+        }
+        //Else, set the new node as the head and set the next node for the new node to the head
+        else {
+            newNode.next = this.head;
+            this.head = newNode;
+        }
+    }
+
+    //This method removes a node from the beginning of the list
+    public void removeFirst() {
+        //If the list is empty, do nothing
+        if(this.head == null) {
+            return;
+        }
+        //Else, set the head to the next node for the head. C# will garbage collect the old head
+        else {
+            this.head = this.head.next;
+        }
+    }
+    
+    //This method removes a node from the end of the list
+    public void removeLast() {
+        //If the list is empty, do nothing
+        if(this.head == null) {
+            return;
+        }
+        //Else, if the head is the only node, set the head to null
+        else if(this.head.next == null) {
+            this.head = null;
+        }
+        //Else, traverse to the end of the list and set next for the node before the tail to null
+        else {
+            Node current = this.head;
+            while(current.next.next != null) {
+                current = current.next;
+            }
+            current.next = null;
+        }
+    }
+}
+
+#!markdown
+
+<span style="font-size:16px;">
+This next version of LinkedList replaces <code>removeLast()</code> with <code>remove()</code>, which accepts one parameter: the value to remove.
+</span>
+
+#!csharp
+
+//This is a linked list of integers
+public class LinkedList {
+    public Node head;
+    public Node tail;
+    
+    //Constructor
+    public LinkedList() {
+        this.head = null;
+        this.tail = null;
+    }
+    
+    //This method adds a node to the end of the list
+    public void add(int data) {
+        //Creat a new node from the data
+        Node newNode = new Node(data);
+
+        //If the list is empty, set the head to the new node
+        if(this.head == null) {
+            this.head = newNode;
+        }
+        //Else, if the tail is null, set the new node as the tail and set tail as the 
+        //next node for head
+        else if(this.tail == null) {
+            this.tail = newNode;
+            this.head.next = this.tail;
+        }
+        //Else, set next for the tail to the new node and then set tail to the new node
+        else {
+            this.tail.next = newNode;
+            this.tail = newNode;
+        }
+    }
+
+    //This method adds a node to the beginning of the list
+    public void addFirst(int data) {
+        //Creat a new node from the data
+        Node newNode = new Node(data);
+
+        //If the list is empty, set the head to the new node
+        if(this.head == null) {
+            this.head = newNode;
+        }
+        //Else, set the new node as the head and set the next node for the new node to the head
+        else {
+            newNode.next = this.head;
+            this.head = newNode;
+        }
+    }
+    
+    //This method removes the first instance of a node with given data
+    public void remove(int data) {
+        //If the list is empty, do nothing
+        if(this.head == null) {
+            return;
+        }
+        //Else, check to see if the head is the node to be removed
+        else if(this.head.data == data) {
+            this.head = this.head.next; //Set the head to the next node; C# will garbage collect the old head
+        }
+        //Else, traverse the list and check to see if the node to be removed is in the list
+        else {
+            Node current = this.head;
+            while(current.next != null) { //If we fall out of this while loop, there is no node with the given data
+                if(current.next.data == data) {
+                    current.next = current.next.next; //Set the next node for the node before the node to be removed to the node after the node to be removed
+                    return;
+                }
+                current = current.next;
+            }
+        }
+    }
+
+    //This method removes a node from the beginning of the list
+    public void removeFirst() {
+        //If the list is empty, do nothing
+        if(this.head == null) {
+            return;
+        }
+        //Else, set the head to the next node for the head. C# will garbage collect the old head
+        else {
+            this.head = this.head.next;
+        }
+    }
+}
+
+#!markdown
+
+<span style="font-size:16px;">
+<code>remove()</code> is <kbd>O(n)</kbd> because the list must be traversed to find the node to remove.  <code>removeFirst()</code> is <kbd>O(1)</kbd> because it just replaces the list’s head node with its second node.
+</span>
+
+#!markdown
+
+<span style="font-size:16px;">
+This completes the basic components needed for a linked list. Consider some other methods that might be useful in this implementation. There's a small linked list in the code cell below; try adding some methods of your own and test them out.
+</span>
+
+#!csharp
+
+LinkedList list = new LinkedList();
+list.add(64);
+list.add(71);
+list.add(12);
+list.add(101);
+list.add(9);
+
+#!markdown
+
+<hr /><span style="font-size:14px;">
+<b style="font-size:16px;">Exercises</b> &emsp;|&emsp; <i>Solve the exercises in the provided </i><code>code</code><i> cells.</i> <br /><br />
+For each exercise, you may create a new method in the Linked List class to solve the problem.<br /><br />
+1. Print the contents of the list in the cell above.
+</span>
+
+#!csharp
+
+// Exercise 1
+
+#!markdown
+
+<span style="font-size:14px;">2. Print the value "101" from the list.</span>
+
+#!csharp
+
+// Exercise 2
+
+#!markdown
+
+<span style="font-size:14px;">3. Swap the head node with the 3rd node in the list (<code>data = 12</code>).</span>
+
+#!csharp
+
+// Exercise 3
+
+#!markdown
+
+<span style="font-size:14px;">4. Add a new node with <code>data = 88</code> <b><i>after</b></i> the second node (<code>data = 71</code>)</span>
+
+#!csharp
+
+// Exercise 4

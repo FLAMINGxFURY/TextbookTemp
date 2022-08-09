@@ -1,0 +1,39 @@
+#!markdown
+
+<span style="font-size:16px;">
+<h1 style="font-family:Copperplate">Trees</h1>
+Like linked lists, <code>trees</code> are node-based data structures. Trees are constructed heirarchically, with nodes branching out from a single <code>root</code> node.
+</span>
+
+#!markdown
+
+<span style="font-size:16px;">
+<h4 style="font-family:Copperplate">Tree Nodes</h4>
+Each node has a single <code>parent</code> (except for the <code>root</code>) and can have any number of <code>chilren</code>. Depending on the implementation of the tree, nodes may be <i>singly</i> or <i>doubly</i> linked (with or without a reference to their <code>parent</code>).<br /><br />
+Below is an example of a generic tree node, which can have any number of children and has a reference to its parent.
+</span>
+
+#!csharp
+
+public class TreeNode {
+    public int data;
+    public TreeNode parent;
+    public List<TreeNode> children;
+
+    //Constructor
+    public TreeNode(int data) {
+        this.data = data;
+        this.parent = null;
+        this.children = new List<TreeNode>();
+    }
+}
+
+#!markdown
+
+<span style="font-size:16px;">
+The <code>root</code> node is the first node in the tree. It is said to be at the <i>top</i> of the tree, and makes up the first <i>level</i> of the tree. Each level is <kbd>n-1</kbd> branches from the root, where n is the level of the node. The <i>depth</i> of a node is the number of levels between the node and the root; the <i>height</i> of the tree is the number of levels in the tree.
+</span>
+
+#!markdown
+
+example of a tree using these nodes, then a diagram of a tree, then creating that tree. Need to cover insertion - show how difficult it is to navigate. Likely need to do some kind of traversal here - keep it simple. Look at some code to see what is most common for insertion/deletion.
