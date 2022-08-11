@@ -55,19 +55,15 @@ Console.WriteLine($"Using IndexOf():\t\t {Array.IndexOf(inputArray, 409)}");
 <code>FindIndex</code> implements one of many well-known strategies, or <i>algorithms</i>, for doing searches. As a rule, multiple algorithms have been devised for common problems like searching, in part because algorithms perform differently for different collections of data.</br></br>
 Two <i>metrics</i> (measures) are commonly used to characterize an algorithm’s efficiency. One, <b>Time Complexity</b> measures how many operations an algorithm might need to complete in relation to the size of its input. The other, <b>Space Complexity</b> measures how much memory an algorithm might use during its runtime. Depending on context, these metrics may be used to characterize an algorithm’s worst-case or its expected (i.e., average) behavior. They may also be specified relative to assumptions about the algorithm’s input. In every case, the assumptions that underly a metric’s use should be clearly specified as a part of an analysis of an algorithm’s behavior.<br /><br />
 Consider, for example, the time and space complexity of <code>FindIndex()</code>, relative to an arbitrary array of n elements.<br /><br />
-<i>How many operations will it take to complete?</i> In the worst case, <code>FindIndex()</code>will need to examine all of an n-element array's elements to conclude that a value is missing. This assertion is denoted using Big-O notation, as follows:</span> 
-<br /><br />
+<i>How many operations will it take to complete?</i> In the worst case, <code>FindIndex()</code>will need to examine all of an n-element array's elements to conclude that a value is missing. This assertion is denoted using Big-O notation, as follows:<br /><br />
 
 >$O(n)$
 
-<span style="font-size:16px;">
 where <i>n</i> is the length of the input.<br /><br />
-<i>How much memory will it use?</i> The answer to this question is more definite. The method uses two variables: the return variable <code>index</code>, and the loop variable <code>i</code>. Using Big-O notation, this assertion is denoted as follows:</span>
-<br /><br />
+<i>How much memory will it use?</i> The answer to this question is more definite. The method uses two variables: the return variable <code>index</code>, and the loop variable <code>i</code>. Using Big-O notation, this assertion is denoted as follows:
 
 >$O(2)$
 
-<span style="font-size:16px;">
 Consult (e.g.) Khan Academy’s references on <a href="https://www.khanacademy.org/computing/computer-science/algorithms/asymptotic-notation/a/asymptotic-notation">time complexity</a> and <a href="https://www.khanacademy.org/computing/computer-science/algorithms/asymptotic-notation/a/big-o-notation">Big-O notation</a> for more information on both topics.
 
 <img src="https://raw.githubusercontent.com/FLAMINGxFURY/TextbookTemp/main/Chapter%201%20-%20Array%20and%20Array%20Algorithms/Assets/timecomplexity.jpg" style="width:90%;" /> <br /><a href="https://www.bigocheatsheet.com/" style="font-size:11px;">Source: Big-O Cheat Sheet</a>
@@ -187,27 +183,22 @@ Array.Sort(bigSorted);
 <span style="font-size:16px;">
 <code>Array.Sort()</code> is much faster than Bubble Sort. Depending on your machine, the difference may be more or less pronounced. Running the algorithms again may also produce anomalous results if your machine caches the operations. <br />
 
-C# uses <b>Quick Sort</b>, a divide-and-conquer algorithm, for <code>Array.Sort()</code>. Here is what Quick Sort does:</span>
+C# uses <b>Quick Sort</b>, a divide-and-conquer algorithm, for <code>Array.Sort()</code>. Here is what Quick Sort does:
 
 1. It selects an element in the array. This can be either a random or a predetermined element: e.g., the array's first or last element. This is called the <code>pivot</code>.
 2. It iterates over the rest of the array, placing values less than the <code>pivot</code> to the left of it, and values greater to the right. 
 3. It repeats steps 1 and 2 for both subarrays to the left and right of the pivot, until the subarrays are of size 1.
 4. At that point, the array is sorted.
 
-<span style="font-size:16px;">
-The <i>average</i> time complexity for this algorithm is</span>
-<br /><br />
+The <i>average</i> time complexity for this algorithm is
 
 >$O(nlog(n))$
 
-<span style="font-size:16px;">
 <i>n</i> because of the first pass over the array. <i>log(n)</i> because each pivot will split the array roughly in half.<br /><br />
-The <i>worst</i> case for Quick Sort is actually</span>
-<br /><br />
+The <i>worst</i> case for Quick Sort is actually
 
 >$O(n^2)$
 
-<span style="font-size:16px;">
 because there is a chance that <b>EVERY</b> pivot will be either the lowest or highest value in the array. However, in practice, this rarely occurs. This, for example, will happen when the pivot is the array's first element <b>AND</b> the array is already sorted; QuickSort will place no values in the left subarray since the pivot will be the array's smallest value.
 </span>
 
@@ -215,16 +206,12 @@ because there is a chance that <b>EVERY</b> pivot will be either the lowest or h
 
 <span style="font-size:16px;">
 Like sorts, searches can be optimized using a divide-and-conquer strategy. <code>Array.BinarySearch()</code> is one of these. Binary Search expects a <b>sorted</b> input. Based on the assumption that an array is sorted, it does the following:
-</span>
 
 1. Start at the middle value of the array. If this value is the requested value, stop here.
 2. If the middle value is greater than the requested value, check the array’s left (lesser) half. If it is less, check the right (greater) half.
 3. Repeat steps 1 and 2 until the value is found, or identified as being missing from the array.
 
-<span style="font-size:16px;">
 This splits the problem into increasingly smaller subproblems, and results in a time complexity of
-</span>
-<br /><br />
 
 >$O(log(n))$
 

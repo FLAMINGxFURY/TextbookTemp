@@ -2,7 +2,7 @@
 
 <span style="font-size:16px;">
 <h1 style="font-family:Copperplate">Trees</h1>
-Like linked lists, <code>trees</code> are node-based data structures. Trees are constructed heirarchically, with nodes branching out from a single <code>root</code> node.
+Like linked lists, <code>trees</code> are node-based data structures. Trees are constructed heirarchically, with nodes branching out from a single <code>root</code> node. In a tree, there must only be one path to reach each node.
 </span>
 
 #!markdown
@@ -36,4 +36,199 @@ The <code>root</code> node is the first node in the tree. It is said to be at th
 
 #!markdown
 
-example of a tree using these nodes, then a diagram of a tree, then creating that tree. Need to cover insertion - show how difficult it is to navigate. Likely need to do some kind of traversal here - keep it simple. Look at some code to see what is most common for insertion/deletion.
+<img src="https://raw.githubusercontent.com/FLAMINGxFURY/TextbookTemp/main/Chapter%204%20-%20Trees%20and%20Binary%20Trees/Assets/Generic%20Tree%20Diagram.png" alt="Generic Tree Diagram" style="background-color:rgba(255,255,255,0.5);" />
+
+#!markdown
+
+<span style="font-size:16px;">
+How can the tree depicted above be created in code? Below is a generic tree class created using the TreeNode above. 
+</span> 
+
+#!csharp
+
+public class Tree {
+    public TreeNode root;
+
+    //Constructor
+    public Tree(int data) {
+        this.root = new TreeNode(data);
+    }
+}
+
+#!markdown
+
+<span style="font-size:16px;">
+The above tree has no <code>Add</code> method. This is because it is difficult to specify where a new node should be added to the tree. Should we add the new node after a specified value? With this logic, the <code>Add</code> method would have anomalous behavior: if there are two of the same value in the tree, the node would be added to the first one found. This also depends on the way the tree is <i>traversed</i>; in other words, the order in which the nodes are considered when walking the entire tree.<br /><br />
+This operation can be made much easier by adding <i>constraints</i> to the tree. In the example below, constraints will be added manually.
+</span>
+
+#!csharp
+
+//In this line, the root node data is passed in. The Tree constructor will 
+//create a new TreeNode and assign it to the root property.
+Tree exampleTree = new Tree(0);
+
+//Add the children for the root node.
+exampleTree.root.children.Add(new TreeNode(1));
+exampleTree.root.children.Add(new TreeNode(2));
+exampleTree.root.children.Add(new TreeNode(3));
+exampleTree.root.children.Add(new TreeNode(4));
+exampleTree.root.children.Add(new TreeNode(5));
+
+//Add the children for the first child node.
+exampleTree.root.children[0].children.Add(new TreeNode(6));
+exampleTree.root.children[0].children.Add(new TreeNode(7));
+exampleTree.root.children[0].children.Add(new TreeNode(8));
+
+//Add the children for the second child node.
+exampleTree.root.children[1].children.Add(new TreeNode(9));
+exampleTree.root.children[1].children.Add(new TreeNode(10));
+
+//Add the children for the third child node.
+exampleTree.root.children[2].children.Add(new TreeNode(11));
+
+//The fourth child node has no children. 
+//Add the children for the fifth child node.
+exampleTree.root.children[4].children.Add(new TreeNode(12));
+exampleTree.root.children[4].children.Add(new TreeNode(13));
+exampleTree.root.children[4].children.Add(new TreeNode(14));
+exampleTree.root.children[4].children.Add(new TreeNode(15));
+
+#!markdown
+
+<span style="font-size:16px;">
+<h4 style="font-family:Copperplate">Tree Traversal</h4>
+The data from the image is now stored in the tree; however, it is of no use if we cannot access the data. Tree traversal is the process of walking the tree to access each node. The methods for traversing a tree are vaired, and come in two main types: <i>breadth-first</i> and <i>depth-first</i>.<br /><br />
+
+>Note: All of the below methods could (and typically would) be implemented in the class. Here, they are implemented as separate methods for clarity.
+
+</span>
+
+#!markdown
+
+<span style="font-size:16px;">
+<h5 style="font-family:Copperplate">Breadth-First Traversal</h5>
+<i>Breadth-first</i> refers to traversing the "width" of the tree before traversing the "height" of the tree. This is also referred to as a <i>level-order</i> traversal. To accomplish this, the tree is traversed level-by-level, starting at the root.
+</span>
+
+#!csharp
+
+void LevelOrder(Tree tree) {
+    //Here, a queue is used to store the nodes in the current level.
+    Queue<TreeNode> queue = new Queue<TreeNode>();
+
+    //Begin with the root node.
+    queue.Enqueue(tree.root);
+
+    //Whenever the queue is empty, all nodes have been visited.
+    while (queue.Count > 0) {
+        //Dequeue the first node in the queue.
+        TreeNode node = queue.Dequeue();
+        //Print the node data.
+        Console.Write(node.data + " ");
+
+        //Add the children of the node to the queue; they will be visited 
+        //after the current level is finished.
+        foreach (TreeNode child in node.children) {
+            queue.Enqueue(child);
+        }
+    }
+}
+
+#!csharp
+
+LevelOrder(exampleTree);
+
+#!markdown
+
+<span style="font-size:16px;">
+<h5 style="font-family:Copperplate">Depth-First Traversal</h5>
+<i>Depth-first</i> traversal visits each branch before the next instead of visiting each level before the next. There are three common methods for <i>depth-first</i> traversal, which each perform this method slightly differently:
+<ul><i><b>Pre-order</b></i> traversal performs the operation on the current node, and then visits the children of the current node. </ul>
+<ul><i><b>Post-order</b></i> traversal visits the children of the current node, and performs the operation on the current node when there are no more children to traverse. </ul>
+<ul><i><b>In-order</b></i> traversal visits all but the last child of the current node, and then performs the operation on the current node. If the current node has no children, the operation is perfomed on the current node. Finally, the last child is visited.</ul>
+The examples below are recursive implementations of these traversal methods. The operation being performed on each node's data is <code>Console.Write</code>.
+</span>
+
+#!csharp
+
+void PreOrder(TreeNode node) {
+    //If the node is null, there are no more nodes to visit.
+    if (node == null) return;
+
+    //Print the node data.
+    Console.Write(node.data + " ");
+    //Visit the children of the node.
+    foreach (TreeNode child in node.children) {
+        PreOrder(child);
+    }
+}
+
+#!csharp
+
+void PostOrder(TreeNode node) {
+    //If the node is null, there are no more nodes to visit.
+    if (node == null) return;
+
+    //Visit the children of the node.
+    foreach (TreeNode child in node.children) {
+        PostOrder(child);
+    }
+    //Print the node data.
+    Console.Write(node.data + " ");
+}
+
+#!csharp
+
+void InOrder(TreeNode node) {
+    //If the node is null, there are no more nodes to visit.
+    if (node == null) return;
+
+    //Visit the children of the node.
+    if (node.children.Count > 1) {
+        foreach (TreeNode child in node.children.Take(node.children.Count - 1)) {
+            InOrder(child);
+        }
+    }
+    //Print the node data.
+    Console.Write(node.data + " ");
+    //Visit the last child of the node.
+    if (node.children.Count > 0) InOrder(node.children.Last());
+}
+
+#!csharp
+
+//Here, we pass in the root node of the tree as a starting point for the traversals.
+Console.Write("PreOrder: ");
+PreOrder(exampleTree.root);
+Console.WriteLine();
+
+Console.Write("PostOrder: ");
+PostOrder(exampleTree.root);
+Console.WriteLine();
+
+Console.Write("InOrder: ");
+InOrder(exampleTree.root);
+
+#!markdown
+
+<span style="font-size:16px;">
+Below is another image of the tree to compare the results of the traversals to.
+</span>
+
+#!markdown
+
+<img src="https://raw.githubusercontent.com/FLAMINGxFURY/TextbookTemp/main/Chapter%204%20-%20Trees%20and%20Binary%20Trees/Assets/Generic%20Tree%20Diagram.png" alt="Generic Tree Diagram" style="background-color:rgba(255,255,255,0.5);" />
+
+#!markdown
+
+<hr /><span style="font-size:14px;">
+<b style="font-size:16px;">Exercises</b> &emsp;|&emsp; <i>Place your answers in a <b>new</b> markdown cell below.</i>
+<ol>
+<li> What qualities of a tree make them similar to liked lists? What qualities make them different?<br /><br /></li>
+<li> What is the <code>root</code> node?<br /><br /></li>
+<li> What are parents and children?<br /><br /></li>
+<li> In the diagram above, what is the depth of 9? of 0? of 4?<br /><br /></li>
+<li> In the diagram above, what is the height of the tree?<br /><br /></li>
+<li> What is traversal? How does <i>breadth-first</i> traversal differ from <i>depth-first</i> traversal?<br /><br /></li>
+</span>

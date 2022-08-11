@@ -25,10 +25,12 @@ using(var reader = new StreamReader(@"./Assets/inputJagged.csv")) {
 <span style="font-size:16px;">
 <h4 style="font-family:Copperplate;margin-bottom:6pt;">1. Using Builtin Methods</h4>
 In the following code block, do the following:
-</span>
+
 
 1. Sort each row of the jagged array.
 2. Print the index of the integer 256 for each row, if it's present in that row, or -1 if it is not.
+
+</span>
 
 #!csharp
 
@@ -39,16 +41,13 @@ In the following code block, do the following:
 <span style="font-size:16px;">
 <h4 style="font-family:Copperplate;margin-bottom:6pt;">2. Create a Divide and Conquer Sorting Method</h4>
 For this exercise, you may implement either Quick Sort or Merge Sort to sort an array of integers. Quick Sort, which was discussed in 1.3, does the following:
-</span>
 
 1. It selects an element in the array. This can be either a random or a predetermined element: e.g., the array's first or last element. This is called the <code>pivot</code>.
 2. It iterates over the rest of the array, placing values less than the <code>pivot</code> to the left of it, and values greater to the right. 
 3. It repeats steps 1 and 2 for both subarrays to the left and right of the pivot, until the subarrays are of size 1.
 4. At that point, the array is sorted.
 
-<span style="font-size:16px;">
 The other option, Merge Sort, recursively splits the array into smaller pieces, and then reconstructs the array in a sorted manner, like so:
-</span>
 
 1. It splits the array into two halves, left and right.
 2. It repeats step 1 for both the left and right subarrays, and continues to do so until it yields subarrays of size 1.
@@ -57,7 +56,6 @@ The other option, Merge Sort, recursively splits the array into smaller pieces, 
 5. At this point, the new array is a sorted version of the two subarrays that were split. This new array is returned.
 6. Steps 3-5 occur recursively until the final sorted array is returned.
 
-<span style="font-size:16px;">
 Method headers have been provided below to help you get started. You may want (or need) to create helper methods, depending on your approach.
 </span>
 
@@ -78,12 +76,13 @@ int[] MergeSort(/* Think about what you need here */) {
 <span style="font-size:16px;">
 <h4 style="font-family:Copperplate;margin-bottom:6pt;">3. Create Binary Search</h4>
 For this exercise, you will implement your own Binary Search algorithm. Remember, this is what Binary Search does:
-</span>
 
 1. Start at the array's middle value. If this value is the target, stop here.
 2. If the middle value is greater than the target value, check the left (lesser) half of the array. If it is less, check the right (greater) half.
 3. Repeat steps 1 and 2 until you find the value or identify where the value should be.
 4. Return the value’s index, or a -1 if the value is issing from the array.
+
+</span>
 
 #!csharp
 
@@ -97,10 +96,11 @@ int BinarySearch(/* Think about what you need here */) {
 <span style="font-size:16px;">
 <h4 style="font-family:Copperplate;margin-bottom:6pt;">4. Using Your Methods</h4>
 In the following code block, do the following:
-</span>
 
 1. Sort each row of the jagged array, using your Quick Sort or Merge Sort.
 2. Using Binary Search, print the index of the integer 256 for each row, if it’s present in that row, or -1 if not.
+
+</span>
 
 #!csharp
 

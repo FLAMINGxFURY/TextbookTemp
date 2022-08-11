@@ -1,3 +1,42 @@
 #!markdown
 
+<span style="font-size:16px;">
+<h1 style="font-family:Copperplate">Binary Trees</h1>
+<code>Binary Trees</code> are a <i>constrained</i> data structure derived from trees. Instead of each node having any number of children, each node can have up to two children: <code>left</code> and <code>right</code>. The node class (if <i>doubly-linked</i>) looks like this:
+</span>
+
+#!csharp
+
+public class BinaryTreeNode {
+    public int data;
+    public BinaryTreeNode parent;
+    public BinaryTreeNode left;
+    public BinaryTreeNode right;
+
+    public BinaryTreeNode(int data) {
+        this.data = data;
+        parent = null;
+        left = null;
+        right = null;
+    }
+}
+
+#!markdown
+
+<span style="font-size:16px;">
+A binary tree could look like this:
+</span>
+
+#!markdown
+
+[tree image]
+
+#!markdown
+
+<span style="font-size:16px;">
+The previous chapter mentioned that it is difficult to insert an item into a tree without constraints. So far, we have constrained nodes so that they cannot have more than two children; however, we need more constraints to decide which node to add to, in the case that there are multiple nodes with less than two children.
+</span>
+
+#!markdown
+
 Reinforce "constraints". Cover Binary trees, and then use BST to show how insertion (and maybe deletion? Deletion requires search) is easier with these constraints.
