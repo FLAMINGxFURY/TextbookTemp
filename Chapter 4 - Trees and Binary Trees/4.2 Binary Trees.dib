@@ -29,14 +29,361 @@ A binary tree could look like this:
 
 #!markdown
 
-[tree image]
+<img src="https://raw.githubusercontent.com/FLAMINGxFURY/TextbookTemp/main/Chapter%204%20-%20Trees%20and%20Binary%20Trees/Assets/BinaryTree.png" alt="Binary Tree" style="background-color:rgba(255,255,255,0.5);width:90%;" />
 
 #!markdown
 
 <span style="font-size:16px;">
-The previous chapter mentioned that it is difficult to insert an item into a tree without constraints. So far, we have constrained nodes so that they cannot have more than two children; however, we need more constraints to decide which node to add to, in the case that there are multiple nodes with less than two children.
+The previous chapter mentioned that it is difficult to insert an item into a tree without constraints. So far, we have constrained nodes so that they cannot have more than two children; however, we need more constraints to decide which node to add to, in the case that there are multiple nodes with less than two children.<br /><br />
+Consider the diagram above. Should a new node be added as the right child of 4, the left child of 2, pr the right child of 5? For that matter, should it be added as a new child of 6, 7, 8, or 9? What constraints can be added to the tree to choose the proper location for the new node?
 </span>
 
 #!markdown
 
-Reinforce "constraints". Cover Binary trees, and then use BST to show how insertion (and maybe deletion? Deletion requires search) is easier with these constraints.
+<span style="font-size:16px;">
+<h4 style="font-family:Copperplate">Balanced Trees</h4>
+A tree is <i>balanced</i> if the height of the left and right subtrees differ by at most one; this rule must also be met for each node in the tree. Balanced trees are most useful for applications that require frequent accesses because they minimize the traversal length from root to leaf.
+<br /><br />
+
+> Consider the tree in the diagram above. Is it balanced? Why or why not?
+
+Enforcing balance provides enough constraint to easily decide where to add a new node to a tree. The following balanced binary tree contains a breadth-first add method:
+</span>
+
+#!csharp
+
+public class BalancedBinaryTree {
+    public BinaryTreeNode root;
+
+    public BalancedBinaryTree(int data) {
+        root = new BinaryTreeNode(data);
+    }
+
+    public void Add(int data) {
+        BinaryTreeNode newNode = new BinaryTreeNode(data);
+        
+        //Here, a queue is used to store the nodes in the current level.
+        Queue<BinaryTreeNode> queue = new Queue<BinaryTreeNode>();
+
+        //Begin with the root node.
+        queue.Enqueue(root);
+        
+        while (queue.Count > 0) {
+            BinaryTreeNode currentNode = queue.Dequeue();
+            //Check if the left node is null. If it is, 
+            //put the new node there and return from the method.
+            if (currentNode.left == null) {
+                currentNode.left = newNode;
+                newNode.parent = currentNode;
+                return;
+            } 
+            //If it isn't, add it to the queue.
+            else {
+                queue.Enqueue(currentNode.left);
+            }
+            //Check if the right node is null. If it is, 
+            //put the new node there and return from the method.
+            if (currentNode.right == null) {
+                currentNode.right = newNode;
+                newNode.parent = currentNode;
+                return;
+            }
+            //If it isn't, add it to the queue. 
+            else {
+                queue.Enqueue(currentNode.right);
+            }
+        }
+    }
+
+    //Traversals below - you can collapse these with the arrow to the left.
+    
+    //defaults
+    public void PreOrder() {
+        PreOrder(root);
+    }
+    public void InOrder() {
+        InOrder(root);
+    }
+    public void PostOrder() {
+        PostOrder(root);
+    }
+    
+    void PreOrder(BinaryTreeNode node) {
+        //If the node is null, there are no more nodes to visit.
+        if (node == null) return;
+    
+        //Print the node data.
+        Console.Write(node.data + " ");
+        //Visit the children of the node.
+        PreOrder(node.left);
+        PreOrder(node.right);
+    }
+
+    void InOrder(BinaryTreeNode node) {
+        //If the node is null, there are no more nodes to visit.
+        if (node == null) return;
+    
+        //Visit the children of the node.
+        InOrder(node.left);
+        //Print the node data.
+        Console.Write(node.data + " ");
+        InOrder(node.right);
+    }
+
+    void PostOrder(BinaryTreeNode node) {
+        //If the node is null, there are no more nodes to visit.
+        if (node == null) return;
+    
+        //Visit the children of the node.
+        PostOrder(node.left);
+        PostOrder(node.right);
+        //Print the node data.
+        Console.Write(node.data + " ");
+    }
+
+    public void LevelOrder() {
+        //Here, a queue is used to store the nodes in the current level.
+        Queue<BinaryTreeNode> queue = new Queue<BinaryTreeNode>();
+
+        //Begin with the root node.
+        queue.Enqueue(this.root);
+
+        //Whenever the queue is empty, all nodes have been visited.
+        while (queue.Count > 0) {
+            //Dequeue the first node in the queue.
+            BinaryTreeNode node = queue.Dequeue();
+            //Print the node data.
+            Console.Write(node.data + " ");
+
+            //Add the children of the node to the queue; they will be visited 
+            //after the current level is finished.
+            if(node.left != null) queue.Enqueue(node.left);
+            if(node.right != null) queue.Enqueue(node.right);
+        }
+    }
+}
+
+#!markdown
+
+<span style="font-size:16px;">
+Adding nodes to this tree will result in a tree that looks like this:
+</span>
+
+#!markdown
+
+<img src="https://raw.githubusercontent.com/FLAMINGxFURY/TextbookTemp/main/Chapter%204%20-%20Trees%20and%20Binary%20Trees/Assets/BalancedBinaryTree.png" alt="Balanced Binary Tree" style="background-color:rgba(255,255,255,0.5);width:90%;" />
+
+#!csharp
+
+BalancedBinaryTree exampleTree = new BalancedBinaryTree(0);
+exampleTree.Add(1);
+exampleTree.Add(2);
+exampleTree.Add(3);
+exampleTree.Add(4);
+exampleTree.Add(5);
+exampleTree.Add(6);
+exampleTree.Add(7);
+exampleTree.Add(8);
+exampleTree.Add(9);
+
+Console.Write("PreOrder: ");
+exampleTree.PreOrder();
+Console.WriteLine();
+
+Console.Write("InOrder: ");
+exampleTree.InOrder();
+Console.WriteLine();
+
+Console.Write("PostOrder: ");
+exampleTree.PostOrder();
+Console.WriteLine();
+
+Console.Write("LevelOrder: ");
+exampleTree.LevelOrder();
+
+#!markdown
+
+<span style="font-size:16px;">
+<h4 style="font-family:Copperplate">Binary Search Trees</h4>
+<i>Binary search trees</i> apply a different constraint to the binary tree. The left child of a node must be less than or equal to the parent, and the right child must be greater than the parent. This results in a tree whose data is always sorted in an inorder traversal.<br /><br />
+Using this constraint, we can choose the proper location for a new node based on the nodes in the tree.
+</span>
+
+#!csharp
+
+public class BinarySearchTree {
+    public BinaryTreeNode root;
+
+    public BinarySearchTree(int data) {
+        root = new BinaryTreeNode(data);
+    }
+
+    public void Add(int data) {
+        BinaryTreeNode newNode = new BinaryTreeNode(data);
+        
+        //First, check if the root is null. If it is, put the new node there and return.
+        if (root == null) {
+            root = newNode;
+            return;
+        }
+
+        //If it isn't, begin with the root node.
+        BinaryTreeNode currentNode = root;
+
+        while (true) {
+            //Check if the new node's data is less than or equal to the current node's data.
+            if (data <= currentNode.data) {
+
+                //If it is, check if the left node is null. If it is, put the new node there and return.
+                if (currentNode.left == null) {
+                    currentNode.left = newNode;
+                    newNode.parent = currentNode;
+                    return;
+                }
+
+                //If it isn't, go to the left node.
+                else {
+                    currentNode = currentNode.left;
+                }
+            }
+
+            //If the new node's data is greater than the current node's data, do the same for the right.
+            else {
+
+                if (currentNode.right == null) {
+                    currentNode.right = newNode;
+                    newNode.parent = currentNode;
+                    return;
+                }
+
+                else {
+                    currentNode = currentNode.right;
+                }
+            }
+        }
+    }
+
+    //Traversals below - you can collapse these with the arrow to the left.
+    
+    //defaults
+    public void PreOrder() {
+        PreOrder(root);
+    }
+    public void InOrder() {
+        InOrder(root);
+    }
+    public void PostOrder() {
+        PostOrder(root);
+    }
+    
+    void PreOrder(BinaryTreeNode node) {
+        //If the node is null, there are no more nodes to visit.
+        if (node == null) return;
+    
+        //Print the node data.
+        Console.Write(node.data + " ");
+        //Visit the children of the node.
+        PreOrder(node.left);
+        PreOrder(node.right);
+    }
+
+    void InOrder(BinaryTreeNode node) {
+        //If the node is null, there are no more nodes to visit.
+        if (node == null) return;
+    
+        //Visit the children of the node.
+        InOrder(node.left);
+        //Print the node data.
+        Console.Write(node.data + " ");
+        InOrder(node.right);
+    }
+
+    void PostOrder(BinaryTreeNode node) {
+        //If the node is null, there are no more nodes to visit.
+        if (node == null) return;
+    
+        //Visit the children of the node.
+        PostOrder(node.left);
+        PostOrder(node.right);
+        //Print the node data.
+        Console.Write(node.data + " ");
+    }
+
+    public void LevelOrder() {
+        //Here, a queue is used to store the nodes in the current level.
+        Queue<BinaryTreeNode> queue = new Queue<BinaryTreeNode>();
+
+        //Begin with the root node.
+        queue.Enqueue(this.root);
+
+        //Whenever the queue is empty, all nodes have been visited.
+        while (queue.Count > 0) {
+            //Dequeue the first node in the queue.
+            BinaryTreeNode node = queue.Dequeue();
+            //Print the node data.
+            Console.Write(node.data + " ");
+
+            //Add the children of the node to the queue; they will be visited 
+            //after the current level is finished.
+            if(node.left != null) queue.Enqueue(node.left);
+            if(node.right != null) queue.Enqueue(node.right);
+        }
+    }
+}
+
+#!markdown
+
+<span style="font-size:16px;">
+Depending on the order in which we add nodes to the tree, the tree can take on different shapes. Here is an example of what one might look like:
+</span>
+
+#!markdown
+
+<img src="https://raw.githubusercontent.com/FLAMINGxFURY/TextbookTemp/main/Chapter%204%20-%20Trees%20and%20Binary%20Trees/Assets/BST.png" alt="Binary Search Tree" style="background-color:rgba(255,255,255,0.5);width:90%;" />
+
+#!markdown
+
+<span style="font-size:16px;">
+Nodes can be added in the following order to create a tree of that shape:
+</span>
+
+#!csharp
+
+BinarySearchTree bst = new BinarySearchTree(6);
+//children of 6
+bst.Add(3);
+bst.Add(7);
+//children of 3
+bst.Add(1);
+bst.Add(5);
+//children of 1
+bst.Add(0);
+bst.Add(2);
+//children of 5
+bst.Add(4);
+//children of 7
+bst.Add(8);
+//children of 8
+bst.Add(9);
+
+Console.Write("PreOrder: ");
+bst.PreOrder();
+Console.WriteLine();
+
+Console.Write("InOrder: ");
+bst.InOrder();
+Console.WriteLine();
+
+Console.Write("PostOrder: ");
+bst.PostOrder();
+Console.WriteLine();
+
+Console.Write("LevelOrder: ");
+bst.LevelOrder();
+
+#!markdown
+
+<hr /><span style="font-size:14px;">
+<b style="font-size:16px;">Exercises</b> &emsp;|&emsp; <i>Solve the exercises in the provided </i><code>code</code><i> cells.</i> <br /><br />
+x
+</span>

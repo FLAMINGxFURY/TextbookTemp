@@ -31,12 +31,13 @@ public class TreeNode {
 #!markdown
 
 <span style="font-size:16px;">
-The <code>root</code> node is the first node in the tree. It is said to be at the <i>top</i> of the tree, and makes up the first <i>level</i> of the tree. Each level is <kbd>n-1</kbd> branches from the root, where n is the level of the node. The <i>depth</i> of a node is the number of levels between the node and the root; the <i>height</i> of the tree is the number of levels in the tree.
+The <code>root</code> node is the first node in the tree. It is said to be at the <i>top</i> of the tree, and makes up the first <i>level</i> of the tree. Each level is <kbd>n-1</kbd> branches from the root, where n is the level of the node. The <i>depth</i> of a node is the number of levels between the node and the root; the <i>height</i> of the tree is the number of levels in the tree. Nodes that have no children are known as <i>leaves</i>, because they are farthest from the root of the tree on a particular branch.<br /><br />
+Each node in a tree can be treated as a root node for a <code>subtree</code>. For example, the node <kbd>1</kbd> with children <kbd>6</kbd>, <kbd>7</kbd>, and <kbd>8</kbd> can be considered a subtree of the depicted tree.
 </span>
 
 #!markdown
 
-<img src="https://raw.githubusercontent.com/FLAMINGxFURY/TextbookTemp/main/Chapter%204%20-%20Trees%20and%20Binary%20Trees/Assets/Generic%20Tree%20Diagram.png" alt="Generic Tree Diagram" style="background-color:rgba(255,255,255,0.5);" />
+<img src="https://raw.githubusercontent.com/FLAMINGxFURY/TextbookTemp/main/Chapter%204%20-%20Trees%20and%20Binary%20Trees/Assets/Generic%20Tree%20Diagram.png" alt="Generic Tree Diagram" style="background-color:rgba(255,255,255,0.5);width:90%;" />
 
 #!markdown
 
@@ -218,7 +219,7 @@ Below is another image of the tree to compare the results of the traversals to.
 
 #!markdown
 
-<img src="https://raw.githubusercontent.com/FLAMINGxFURY/TextbookTemp/main/Chapter%204%20-%20Trees%20and%20Binary%20Trees/Assets/Generic%20Tree%20Diagram.png" alt="Generic Tree Diagram" style="background-color:rgba(255,255,255,0.5);" />
+<img src="https://raw.githubusercontent.com/FLAMINGxFURY/TextbookTemp/main/Chapter%204%20-%20Trees%20and%20Binary%20Trees/Assets/Generic%20Tree%20Diagram.png" alt="Generic Tree Diagram" style="background-color:rgba(255,255,255,0.5);width:90%;" />
 
 #!markdown
 
