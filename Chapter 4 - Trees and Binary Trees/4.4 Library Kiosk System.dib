@@ -1,0 +1,3 @@
+#!markdown
+
+Idea: Create a book object. The goal is to have an initial dataset of books in the tree, then add and subtract books from the tree as books are checked in and out.

@@ -1,3 +1,269 @@
 #!markdown
 
-This is the heavy code. Cover tree balancing. Show different types of traversal. Show tree inversion. 
+<span style="font-size:16px;">
+<h1 style="font-family:Copperplate">Tree Transformations</h1>
+In some cases it is necessary to alter the shape of a tree. This chapter will cover the following cases:
+<ul>
+<li>
+<b>Deletion</b>: When a node is deleted from a tree, a void is left between the parent of that node and the node's former children. In this case, the shape of the tree changes because the children must go somewhere in the tree. 
+</li>
+<li>
+<b>Tree Balancing</b>: Consider the binary search tree. Examples in the previous chapter produced trees that were not balanced. The shape of the tree can be altered to achieve balance while still maintaining the ordered nature of the binary search tree.
+</li>
+</ul>
+</span>
+
+#!markdown
+
+<span style="font-size:16px;">
+<h4 style="font-family:Copperplate">Deleting a Node</h4>
+There are 3 cases for deleting a node from a binary search tree, depending on the number of children the node has. Each case is explained below, in order of increasing complexity:
+<ul>
+<li>
+<b>If the node has no children</b>, the node can be removed from the tree by removing its reference from its parent.
+</li>
+<li>
+<b>If the node has one child</b>, the node can be removed by replacing its reference in its parent with the reference to its child.
+</li>
+<li>
+<b>If the node has two children</b>, it must be replaced by a <i>successor</i>. The successor is the node with the smallest value in the right subtree of the node to be deleted. <br />
+Because the successor is the smallest value in the right subtree, it will have no left child. If it has a right child, that child takes the place of the successor in the successor's former parent. Otherwise, the successor's reference in its former parent is removed.
+</li>
+</ul>
+The binary search tree has been recreated below with the <code>Delete</code> method added, as well as a <code>Find</code> method to find the node to be deleted.
+</span>
+
+#!csharp
+
+public class Node {
+    public int data;
+    public Node parent;
+    public Node left;
+    public Node right;
+
+    public Node(int data) {
+        this.data = data;
+        parent = null;
+        left = null;
+        right = null;
+    }
+}
+
+#!csharp
+
+public class BST {
+    public Node root;
+
+    public BST() {
+        root = null;
+    }
+
+    public BST(int data) {
+        root = new Node(data);
+    }
+
+    public void Add(int data) {
+
+        Node newNode = new Node(data);
+        
+        //First, check if the root is null. If it is, put the new node there and return.
+        if (root == null) {
+            root = newNode;
+            return;
+        }
+
+        //If it isn't, begin with the root node.
+        Node currentNode = root;
+
+        while (true) {
+            //Check if the new node's data is less than or equal to the current node's data.
+            if (data <= currentNode.data) {
+
+                //If it is, check if the left node is null. If it is, put the new node there and return.
+                if (currentNode.left == null) {
+                    currentNode.left = newNode;
+                    newNode.parent = currentNode;
+                    return;
+                }
+
+                //If it isn't, go to the left node.
+                else {
+                    currentNode = currentNode.left;
+                }
+            }
+
+            //If the new node's data is greater than the current node's data, do the same for the right.
+            else {
+
+                if (currentNode.right == null) {
+                    currentNode.right = newNode;
+                    newNode.parent = currentNode;
+                    return;
+                }
+
+                else {
+                    currentNode = currentNode.right;
+                }
+            }
+        }
+    }
+
+    public Node Find(int data) {
+
+        Node currentNode = root;
+
+        //If the root is null, return null.
+        if (currentNode == null) return null;
+        
+        //Similar to Insert, this uses the fact that the BST is sorted.
+        while (currentNode.data != data) {
+            //If both children of the current node are null, 
+            //the data is not in the tree.
+            if (currentNode.left == null && currentNode.right == null) {
+                return null;
+            }
+            
+            if (data < currentNode.data) {
+                currentNode = currentNode.left;
+            }
+            else {
+                currentNode = currentNode.right;
+            }
+        }
+
+        return currentNode;
+    }
+
+    public void Delete(int data) {
+
+        Node toDelete = Find(data);
+
+        //If the node to delete is null, return.
+        if (toDelete == null) return;
+
+        //If the node to delete has no children, just delete it.
+        if (toDelete.left == null && toDelete.right == null) {
+            //If the node to delete is the root, set the root to null.
+            if (toDelete == root) {
+                root = null;
+            }
+            //Otherwise, set the parent's child to null.
+            else {
+                if (toDelete.parent.left == toDelete) {
+                    toDelete.parent.left = null;
+                }
+                else {
+                    toDelete.parent.right = null;
+                }
+            }
+        }
+
+        //If the node to delete has one child, replace its reference
+        //with its child's reference
+        else if (toDelete.left == null || toDelete.right == null) {
+            //Uses a ternary operator to choose the non-null child.
+            Node child = toDelete.left == null ? toDelete.right : toDelete.left;
+
+            //If the node to delete is the root, set the root to the child.
+            if (toDelete == root) {
+                root = child;
+            }
+            //Otherwise, set the parent's child to the child.
+            else {
+                if (toDelete.parent.left == toDelete) {
+                    toDelete.parent.left = child;
+                }
+                else {
+                    toDelete.parent.right = child;
+                }
+            }
+        }
+
+        //If the node to delete has two children, replace its reference
+        //with its successor's reference.
+        else {            
+            Node successor = FindSuccessor(toDelete);
+            int replacementData = successor.data;
+
+            //Here, we can use the Delete method again because 
+            //the successor is guaranteed to have at most one child.
+            Delete(successor.data);
+            
+            toDelete.data = replacementData;
+        }
+    }
+
+    public Node FindSuccessor(Node toDelete) {
+        Node current = toDelete.right;
+        //The successor will be the leftmost node in the right subtree.
+        while (current.left != null) {
+            current = current.left;
+        }
+        return current;
+    }
+
+    public void InOrder() {
+        InOrder(root);
+    }
+    
+    public void InOrder(Node current) {
+        if (current != null) {
+            InOrder(current.left);
+            Console.Write(current.data + " ");
+            InOrder(current.right);
+        }
+    }
+}
+
+#!markdown
+
+<span style="font-size:16px;">
+The following example demonstrates the <code>Delete</code> method, using the same tree as in the previous chapter:
+</span>
+
+#!markdown
+
+<img src="https://raw.githubusercontent.com/FLAMINGxFURY/TextbookTemp/main/Chapter%204%20-%20Trees%20and%20Binary%20Trees/Assets/BST.png" alt="Binary Search Tree" style="background-color:rgba(255,255,255,0.5);width:90%;" />
+
+#!csharp
+
+BST bst = new BST(6);
+//children of 6
+bst.Add(3);
+bst.Add(7);
+//children of 3
+bst.Add(1);
+bst.Add(5);
+//children of 1
+bst.Add(0);
+bst.Add(2);
+//children of 5
+bst.Add(4);
+//children of 7
+bst.Add(8);
+//children of 8
+bst.Add(9);
+
+bst.InOrder();
+Console.WriteLine();
+//Delete a leaf
+bst.Delete(2);
+bst.InOrder();
+Console.WriteLine();
+//Delete a node with one child
+bst.Delete(5);
+bst.InOrder();
+Console.WriteLine();
+//Delete a node with two children
+bst.Delete(6);
+bst.InOrder();
+Console.WriteLine();
+
+#!markdown
+
+<span style="font-size:16px;">
+<h4 style="font-family:Copperplate">Rotations</h4>
+Rotations are necessary to balance a binary search tree. The purpose of a rotation is to shift a subtree to the left or right in order to balance the tree. In a rotation, 2 nodes change in depth. The original root of the subtree becomes one level deeper, and the <i>pivot</i> (or the new root) becomes one level shallower. Because of this change in depth, one of the pivot's children will be transferred to the original root. The old root becomes the pivot's child in its place.<br /><br />
+There are 4 types of rotations, two of which are a combination of the first two. The following figure demonstrates the cases in which each type of rotation is used:
+<img src="https://raw.githubusercontent.com/FLAMINGxFURY/TextbookTemp/main/Chapter%201%20-%20Array%20and%20Array%20Algorithms/Assets/timecomplexity.jpg" style="width:90%;" /> <br /><a href="https://en.wikipedia.org/wiki/Tree_rotation" style="font-size:11px;">Source: Wikipedia</a>
+</span>

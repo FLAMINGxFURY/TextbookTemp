@@ -385,5 +385,61 @@ bst.LevelOrder();
 
 <hr /><span style="font-size:14px;">
 <b style="font-size:16px;">Exercises</b> &emsp;|&emsp; <i>Solve the exercises in the provided </i><code>code</code><i> cells.</i> <br /><br />
-x
+1. Using the <code>BinarySearchTree</code> class, create the tree in the following diagram:
 </span>
+
+#!markdown
+
+<img src="https://raw.githubusercontent.com/FLAMINGxFURY/TextbookTemp/main/Chapter%204%20-%20Trees%20and%20Binary%20Trees/Assets/4.2%20Ex1.png" alt="Binary Search Tree" style="background-color:rgba(255,255,255,0.5);width:90%;" />
+
+#!csharp
+
+//Exercise 1
+
+#!markdown
+
+<span style="font-size:14px;">
+2. What order would the nodes need to be added in to create a balanced tree? Write the code below.
+</span>
+
+#!csharp
+
+//Exercise 2
+
+#!markdown
+
+<span style="font-size:14px;">
+3. How does order affect accessing nodes in a tree? What about balance? Write your answer in a new markdown cell.
+</span>
+
+#!markdown
+
+<span style="font-size:15px;">
+
+>💡**Challenge:** In the following <code>code</code> cells, create methods to perform reverse traversals for pre-order, in-order, post-order, and level order traversals.
+
+</span>
+
+#!csharp
+
+public void ReversePreOrder(BinaryTreeNode node) {
+    
+}
+
+#!csharp
+
+public void ReverseInOrder(BinaryTreeNode node) {
+    
+}
+
+#!csharp
+
+public void ReversePostOrder(BinaryTreeNode node) {
+    
+}
+
+#!csharp
+
+public void ReverseLevelOrder(BinaryTreeNode node) {
+    
+}
